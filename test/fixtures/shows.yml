@@ -1,0 +1,31 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: 
+  tvdbId: 
+  canceled: 
+  nextEpisodeName: 
+  nextEpisodeDate: 
+  nextEpisodeTime: 
+  nextSeasonAndEpisode: 
+  nextEpisodeDescription: 
+  prevEpisodeName: 
+  prevEpisodeDate: 
+  prevEpisodeTime: 
+  prevSeasonAndEpisode: 
+  prevEpisodeDescription: 
+
+two:
+  name: 
+  tvdbId: 
+  canceled: 
+  nextEpisodeName: 
+  nextEpisodeDate: 
+  nextEpisodeTime: 
+  nextSeasonAndEpisode: 
+  nextEpisodeDescription: 
+  prevEpisodeName: 
+  prevEpisodeDate: 
+  prevEpisodeTime: 
+  prevSeasonAndEpisode: 
+  prevEpisodeDescription: 

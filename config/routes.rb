@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
-  get 'landing_page/index'
   root 'landing_page#index'
+  
+  get 'landing_page/index'
+  
+  get 'api/tvdbid/:id', to: 'api#tvdbid'
+  get 'api/name/:id', to: 'api#name'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
