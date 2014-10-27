@@ -1,0 +1,7 @@
+%p= @show[0]
+%p= "Show Airs at "+@airs[0]
+- @found.each do |a|
+  %p= a
+
+- @results.each do |key, value| 
+  %p= "#{key}: #{value}"
