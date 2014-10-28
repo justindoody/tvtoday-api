@@ -34,6 +34,15 @@ class ApiController < ApplicationController
     end
   end
 
+  def shows_json
+    @show = Show.select("name")
+    respond_to do |format|
+      format.html
+      format.xml  { render :xml => @show }
+      format.json { render :json => @show.to_json(:only => [ :name ]) }
+    end
+  end
+
   private
 
     def post_params

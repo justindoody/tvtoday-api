@@ -12,4 +12,6 @@ Rails.application.routes.draw do
   post 'api/create', to: 'api#create', as: :create
   get 'api', to: 'api#index', as: :api_index
 
+  get 'api/shows', to: 'api#shows_json'
+
 end
