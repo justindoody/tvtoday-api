@@ -8,4 +8,8 @@ Rails.application.routes.draw do
 
   get 'parse/:id', to: 'api#parse', as: :parse
 
+  get 'api/new', to: 'api#new', as: :new
+  post 'api/create', to: 'api#create', as: :create
+  get 'api', to: 'api#index', as: :api_index
+
 end

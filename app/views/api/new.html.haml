@@ -1,0 +1,6 @@
+= form_for @show, url: {action: "create"}, html: {method: "post"} do |f|
+  = f.label "Name: "
+  = f.text_field :name
+  = f.label "TVDB ID: "
+  = f.text_field :tvdbId
+  = f.submit "Add Show"
