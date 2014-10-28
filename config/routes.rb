@@ -13,5 +13,6 @@ Rails.application.routes.draw do
   get 'api', to: 'api#index', as: :api_index
 
   get 'api/shows', to: 'api#shows_json'
+  get 'api/shows_updated', to: 'api#shows_updated'
 
 end

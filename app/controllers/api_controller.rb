@@ -18,6 +18,7 @@ class ApiController < ApplicationController
   def create
     @show = Show.create(post_params)
     @show.updateShowFromTVDB
+    ShowLog.create(log: "Added Show: #{params[:show][:name]}")
     redirect_to api_index_url
   end
 
@@ -41,6 +42,11 @@ class ApiController < ApplicationController
       format.xml  { render :xml => @show }
       format.json { render :json => @show.to_json(:only => [ :name ]) }
     end
+  end
+
+  def shows_updated
+    @updated = ShowLog.select(:created_at).last
+    render plain: @updated.created_at
   end
 
   private
