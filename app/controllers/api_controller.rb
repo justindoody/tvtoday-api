@@ -27,7 +27,7 @@ class ApiController < ApplicationController
   end
 
   def tvdbid
-    @show = Show.where(tvdbId: params[:id])
+    @show = Show.where(tvdbId: params[:id]).first
     respond_to do |format|
       format.html
       format.xml  { render :xml => @show }
@@ -36,7 +36,7 @@ class ApiController < ApplicationController
   end
 
   def shows_json
-    @show = Show.select("name, tvdbId").first
+    @show = Show.select("name, tvdbId")
     respond_to do |format|
       format.html
       format.xml  { render :xml => @show }
