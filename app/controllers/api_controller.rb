@@ -3,11 +3,11 @@ class ApiController < ApplicationController
   require 'date'
 
   def name
-    @show = Show.where(name: params[:id])
+    @show = Show.where(name: params[:id]).first
     respond_to do |format|
       format.html
       format.xml  { render :xml => @show }
-      format.json { render :json => @show }
+      format.json { render :json => @show.to_json(:only => [ :name, :canceled, :nextEpisodeName, :nextEpisodeDate, :nextEpisodeTime, :nextSeasonAndEpisode, :nextEpisodeDescription, :prevEpisodeName, :prevEpisodeDate, :prevEpisodeTime, :prevSeasonAndEpisode, :prevEpisodeDescription, :updated_at ]) }
     end
   end
 
