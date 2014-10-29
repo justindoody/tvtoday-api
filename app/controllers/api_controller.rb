@@ -7,7 +7,7 @@ class ApiController < ApplicationController
     respond_to do |format|
       format.html
       format.xml  { render :xml => @show }
-      format.json { render :json => @show.to_json(:only => [ :name, :canceled, :nextEpisodeName, :nextEpisodeDate, :nextEpisodeTime, :nextSeasonAndEpisode, :nextEpisodeDescription, :prevEpisodeName, :prevEpisodeDate, :prevEpisodeTime, :prevSeasonAndEpisode, :prevEpisodeDescription, :updated_at ]) }
+      format.json { render :json => @show.to_json(:except => [ :id, :created_at ]) }
     end
   end
 
@@ -31,7 +31,7 @@ class ApiController < ApplicationController
     respond_to do |format|
       format.html
       format.xml  { render :xml => @show }
-      format.json { render :json => @show }
+      format.json { render :json => @show.to_json(:except => [ :id, :created_at ]) }
     end
   end
 
