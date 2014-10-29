@@ -36,7 +36,7 @@ class ApiController < ApplicationController
   end
 
   def shows_json
-    @show = Show.select("name, tvdbId")
+    @show = Show.select("name, tvdbId").first
     respond_to do |format|
       format.html
       format.xml  { render :xml => @show }
