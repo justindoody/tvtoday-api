@@ -45,8 +45,8 @@ class ApiController < ApplicationController
   end
 
   def shows_updated
-    @updated = ShowLog.select(:created_at).last
-    render plain: @updated.created_at
+    @updated = ShowLog.select(:id, :created_at).last
+    render json: @updated
   end
 
   private
