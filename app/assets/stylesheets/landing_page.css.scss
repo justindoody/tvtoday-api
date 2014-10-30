@@ -1,3 +1,83 @@
 // Place all the styles related to the landing_page controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+body {
+  background: radial-gradient(70% 100%, #312f31, black);
+  color: white;
+  margin-top: 50px;
+  font-family: "Helvetica Neue";
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.landing_page {
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  width: 1200px;
+}
+
+h1 {
+  color: #9f9f9f;
+  font-size: 35pt;
+  letter-spacing: 5px;
+  font-weight: 500;
+  margin: 0px;
+  margin-top: 20px;
+}
+
+h2 {
+  font-weight: 100;
+  margin: 0px;
+  margin-top: 10px;
+  font-size: 18pt;
+  letter-spacing: 6px;
+  color: #606060;
+  margin-bottom: 140px;
+}
+
+.tag {
+  font-size: 25pt;
+  font-weight: 400;
+}
+
+#app_store_button {
+  float: left;
+  margin-left: 78px;
+  border-radius: 20px;
+  background:  linear-gradient(#22b4e1, #0c80a9);
+  height: 44px;
+  width: 240px;
+  text-align: center;
+  color: white;
+  text-decoration: none;
+  line-height: 44px;
+  font-family: "Helvetica Neue";
+  font-weight: 100;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px #065f7d;
+  margin-top: 30px;
+}
+
+#app_store_button:hover {
+  text-decoration: underline;
+}
+
+#col1 {
+  margin-top: 50px;
+  float: left;
+  width: 400px;
+  text-align: center;
+}
+
+#col2 {
+  float: left;
+  max-width: 800px;
+}
+
+.preview {
+  margin: 12px;
+}
+
+

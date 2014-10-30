@@ -1,2 +1,16 @@
-%h1 TV Today
-%p Welcome.
+.landing_page
+  #col1
+    = image_tag("logo.png", id: "logo")
+    %h1 TV TODAY
+    %h2 os x extension
+
+    .tag You tell us what
+    .tag We'll tell you when
+
+    %a{:href => "#", :id => "app_store_button"} add on the app store
+
+  #col2
+    = image_tag("preview_search.jpg", class: "preview")
+    = image_tag("preview_edit.jpg", class: "preview")
+    = image_tag("preview_today.jpg", class: "preview")
+    = image_tag("preview_today_detailed.jpg", class: "preview")
