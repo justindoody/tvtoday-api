@@ -49,6 +49,13 @@ class ApiController < ApplicationController
     render json: @updated
   end
 
+  def update_shows
+    shows = Show.all
+    shows.each do |show|
+      show.updateShowFromTVDB
+    end
+  end
+
   private
 
     def post_params

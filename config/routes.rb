@@ -15,4 +15,6 @@ Rails.application.routes.draw do
   get 'api/shows', to: 'api#shows_json'
   get 'api/shows_updated', to: 'api#shows_updated'
 
+  get 'api/update_all', to: 'api#update_shows', as: :updateShows
+
 end
