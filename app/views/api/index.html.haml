@@ -1,4 +1,6 @@
-- @shows.each do |show|
-  %p 
-    = link_to show.name, tvdbid_path(show.tvdbId, :format => :json)
-    //=show.name http://0.0.0.0:3000/api/tvdbid/247897.json
+.api_container
+  %h1 Show List
+  - @shows.each do |show|
+    %p 
+      = link_to show.name, tvdbid_path(show.tvdbId, :format => :json)
+      //=show.name http://0.0.0.0:3000/api/tvdbid/247897.json
