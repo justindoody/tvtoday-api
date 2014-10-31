@@ -1,10 +1,14 @@
 .api_container
+  %h3= link_to "TV Today API", api_index_path
+  %h1 Add A New Show
   = form_for @show, url: {action: "create"}, html: {method: "post"} do |f|
     = f.label "Name: "
+    %br
     = f.text_field :name
     %br
     %br
     = f.label "TVDB ID: "
+    %br
     = f.text_field :tvdbId
     %br
     %br

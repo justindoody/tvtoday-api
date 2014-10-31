@@ -1,5 +1,10 @@
 .api_container
+  %h3= link_to "TV Today API", api_index_path
   %h1 Show List
+  %br
+  = link_to "Add a Show", new_path
+  %br
+  %br
   - @shows.each do |show|
     %p 
       = link_to show.name, tvdbid_path(show.tvdbId, :format => :json)

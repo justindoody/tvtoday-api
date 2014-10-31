@@ -21,7 +21,7 @@ class Show < ActiveRecord::Base
       air = doc2.search(".//FirstAired").map{|a| a.text}[0]
       airDash = air.gsub(/-/, "")
 
-      if (airDash < date)
+      if (airDash < date && airDash != "")
         r["prevName"] = doc2.search(".//EpisodeName").map{|a| a.text}[0]
         r["prevDescription"] = doc2.search(".//Overview").map{|a| a.text}[0]
         season = doc2.search(".//Combined_season").map{|a| a.text}[0]
