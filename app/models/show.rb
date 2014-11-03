@@ -3,17 +3,20 @@ class Show < ActiveRecord::Base
   require 'date'
 
   def updateShowFromTVDB
-    date = DateTime.now.strftime("%Y%m%e")
+    date = DateTime.now.strftime("%Y%m%d")
     doc = Nokogiri::XML(open("http://thetvdb.com/api/F61D51F3290EE202/series/#{self.tvdbId}/all/"))
     airs = doc.xpath("//Airs_Time").map{|a| a.text}[0]
     status = doc.xpath("//Status").map{|a| a.text}[0]
     episodes = doc.xpath("//Episode")
 
-    if (status.downcase == "continuing")
-      canceled = false
-    elsif (status.downcase == "ended")
-      canceled = true
+    if (status)
+      if (status.downcase == "continuing")
+        canceled = false
+      elsif (status.downcase == "ended")
+        canceled = true
+      end
     end
+    puts "Canceled? #{canceled}"
 
     r = {}
     episodes.reverse_each do |e|
