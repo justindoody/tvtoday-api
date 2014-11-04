@@ -16,7 +16,6 @@ class Show < ActiveRecord::Base
         canceled = true
       end
     end
-    puts "Canceled? #{canceled}"
 
     r = {}
     episodes.reverse_each do |e|

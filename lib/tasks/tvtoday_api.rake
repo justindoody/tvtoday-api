@@ -5,7 +5,12 @@ namespace :tvtoday_api do
     shows = Show.all
     shows.each do |show|
       puts "Updating: #{show.name}"
-      show.updateShowFromTVDB
+      begin 
+        show.updateShowFromTVDB
+      rescue => e
+        logger.warn "Failed updating #{show.name}"
+        next 
+      end
     end
   end
 end
