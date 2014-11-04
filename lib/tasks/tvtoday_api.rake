@@ -5,6 +5,7 @@ namespace :tvtoday_api do
     Rails.logger.info "UPDATING THE API"
     shows = Show.all
     shows.each do |show|
+      puts "Updating: #{show.name}"
       Rails.logger.info "Updating: #{show.name}"
       begin 
         show.updateShowFromTVDB
