@@ -19,3 +19,6 @@ end
 
 # Le Cron
 # 40 * * * * cd /home/justin/rails_apps/tvtoday.20dots.com/current/ && /usr/local/rvm/gems/ruby-2.1.2/bin/rake RAILS_ENV=production tvtoday_api:update_api
+
+# With rvm
+# 40 * * * * cd /home/justin/rails_apps/tvtoday.20dots.com/current/ && /usr/local/rvm/bin/rvm ruby-2.1.2 do /usr/local/rvm/gems/ruby-2.1.2/bin/rake RAILS_ENV=production tvtoday_api:update_api

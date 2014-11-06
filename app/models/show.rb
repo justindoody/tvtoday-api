@@ -4,6 +4,7 @@ class Show < ActiveRecord::Base
 
   def updateShowFromTVDB
     date = DateTime.now.strftime("%Y%m%d")
+    # Might need to update to include en.xml for english, may have caused prior issues
     doc = Nokogiri::XML(open("http://thetvdb.com/api/F61D51F3290EE202/series/#{self.tvdbId}/all/"))
     airs = doc.xpath("//Airs_Time").map{|a| a.text}[0]
     status = doc.xpath("//Status").map{|a| a.text}[0]

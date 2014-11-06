@@ -79,6 +79,28 @@ h2 {
 
 .preview {
   margin: 12px;
+  border: 9px solid #1b1b1b;
+}
+
+#footer {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  font-weight: 100;
+  color: #828D93;
+  line-height: 30px;
+  margin-top: 40px;
+  float: left;
+  width: 100%;
+}
+
+#footer a {
+  color: #179AC5;
+  text-decoration: none;
+}
+
+#footer a:hover {
+  color: #67c8e5;
 }
 
 
