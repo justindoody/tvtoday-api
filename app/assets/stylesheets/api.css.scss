@@ -2,18 +2,25 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+a {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
 .api_container {
-  width: 800px;
-  margin-top: 100px;
+  width: 1000px;
+  margin-top: 50px;
   margin-left: auto;
   margin-right: auto;
-
+  
   a {
-    color: white;
-    text-decoration: none;
+    color: #0095e5;
   }
+
   a:hover {
-    text-decoration: underline;
+    color: #43b8f2;
   }
 
   h3 {
@@ -23,5 +30,31 @@
   font-size: 18pt;
   letter-spacing: 6px;
   color: #606060;
+  }
+
+  h1 {
+    color: #b7d8e8;
+    margin-bottom: 20px;
+  }
 }
+
+.count {
+  float: left;
+  width: 100%;
+  margin: 20px 0px;
+  font-size: 26px;
+}
+
+#show-container {
+  -webkit-column-count: 4;
+  width: 100%;
+  margin: 20px 0px 20px 0px;
+
+  a {
+    color: #eaeaea;
+  }
+
+  a:hover {
+    color: white;
+  }
 }
