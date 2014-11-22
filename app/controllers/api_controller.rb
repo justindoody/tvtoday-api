@@ -24,6 +24,10 @@ class ApiController < ApplicationController
 
   def index
     @shows = Show.all.order(:name)
+    # Laughable security I know. Not important in this instance though.
+    if params[:id] == "admin"
+      @admin = true
+    end
   end
 
   def tvdbid

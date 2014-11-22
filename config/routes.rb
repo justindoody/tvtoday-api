@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get 'api/new', to: 'api#new', as: :new
   post 'api/create', to: 'api#create', as: :create
   get 'api', to: 'api#index', as: :api_index
+  get 'api/:id', to: 'api#index', as: :api_index_admin
 
   get 'api/shows', to: 'api#shows_json'
   get 'api/shows_updated', to: 'api#shows_updated'

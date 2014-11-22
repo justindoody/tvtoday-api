@@ -1,8 +1,8 @@
 .api_container
   %h3= link_to "TV Today API", api_index_path
   %h1 Show List
-  
-  = link_to "Add a Show", new_path
+  - if @admin
+    = link_to "Add a Show", new_path
   
   %strong.count Show Count: #{@shows.count}
 
