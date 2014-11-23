@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141028024708) do
+ActiveRecord::Schema.define(version: 20141123230215) do
 
   create_table "show_logs", force: true do |t|
     t.string   "log"
@@ -36,5 +36,7 @@ ActiveRecord::Schema.define(version: 20141028024708) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "shows", ["tvdbId"], name: "index_shows_on_tvdbId", unique: true
 
 end
