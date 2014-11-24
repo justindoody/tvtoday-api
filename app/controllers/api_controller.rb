@@ -70,8 +70,7 @@ class ApiController < ApplicationController
         results << k.to_i
       end
     end
-    sync = {sync: results}
-    render json: sync.to_json   
+    render json: results.to_json   
   end
 
   private
