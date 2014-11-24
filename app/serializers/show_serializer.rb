@@ -4,4 +4,9 @@ class ShowSerializer < ActiveModel::Serializer
   def updated_at
     object.updated_at.to_i
   end
+
+  def as_json(opts={})
+    json = super(opts)
+    Hash[*json.map{|k, v| [k, v || ("" if v.nil?) || false]}.flatten]
+  end
 end
