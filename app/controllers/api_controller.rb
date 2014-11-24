@@ -1,4 +1,5 @@
 class ApiController < ApplicationController
+  skip_before_action :verify_authenticity_token, only: :sync
   require 'open-uri'
   require 'date'
 
@@ -31,11 +32,12 @@ class ApiController < ApplicationController
   end
 
   def tvdbid
-    @show = Show.where(tvdbId: params[:id]).first
+    @show = Show.find_by_tvdbId(params[:id])
     respond_to do |format|
       format.html
       format.xml  { render :xml => @show }
-      format.json { render :json => @show.to_json(:except => [ :id, :created_at ]) }
+      #format.json { render :json => @show.to_json(:except => [ :id, :created_at ]) }
+      format.json { render json: @show, root: false }
     end
   end
 
@@ -58,6 +60,17 @@ class ApiController < ApplicationController
     shows.each do |show|
       show.updateShowFromTVDB
     end
+  end
+
+  def sync
+    results = []
+    params[:shows].each do |k, v|
+      show = Show.find_by_tvdbId(k)
+      if show.updated_at.to_i != v.to_i
+        results << k
+      end
+    end
+    render json: results.to_json   
   end
 
   private

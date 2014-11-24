@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   get 'api/tvdbid/:id', to: 'api#tvdbid', as: :tvdbid
   get 'api/name/:id', to: 'api#name', as: :name
 
+  post 'api/sync', to: 'api#sync', as: :sync
+
   get 'parse/:id', to: 'api#parse', as: :parse
 
   get 'api/new', to: 'api#new', as: :new

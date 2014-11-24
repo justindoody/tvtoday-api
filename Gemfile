@@ -25,7 +25,11 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 
 gem 'haml'
+
+# Parses the tvdb xml files
 gem 'nokogiri'
+
+gem 'active_model_serializers'
 
 group :development, :test do
   # Use sqlite3 as the database for Active Record
