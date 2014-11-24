@@ -67,10 +67,11 @@ class ApiController < ApplicationController
     params[:shows].each do |k, v|
       show = Show.find_by_tvdbId(k)
       if show.updated_at.to_i != v.to_i
-        results << k
+        results << k.to_i
       end
     end
-    render json: results.to_json   
+    sync = {sync: results}
+    render json: sync.to_json   
   end
 
   private
