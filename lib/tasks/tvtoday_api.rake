@@ -1,11 +1,11 @@
 namespace :tvtoday_api do
   desc "Updates the api database hourly with the latest from TVDB"
   task update_api: :environment do
-    puts "Updating api..."
-    # Rails.logger.info "UPDATING THE API"
+    # puts "Updating api..."
+    Rails.logger.info "UPDATING THE API"
     # Sorts shows so the shows most likely to have changing data are executed first.
     next_date_sorted = Show.where.not(nextEpisodeDate: '').order("nextEpisodeDate asc")
-    unknown_next_date = Show.where(nextEpisodeDate: '')
+    unknown_next_date = Show.where("nextEpisodeDate = ? OR nextEpisodeDate IS ?", '', nil)
     shows = next_date_sorted + unknown_next_date
     count = 0
     shows.each do |show|
