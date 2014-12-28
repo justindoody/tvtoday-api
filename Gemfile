@@ -29,7 +29,7 @@ gem 'haml'
 # Parses the tvdb xml files
 gem 'nokogiri'
 
-gem 'active_model_serializers'
+gem "active_model_serializers", "~> 0.8.0"
 
 group :development, :test do
   # Use sqlite3 as the database for Active Record

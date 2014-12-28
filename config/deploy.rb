@@ -10,9 +10,11 @@ require 'mina/rvm'    # for rvm support. (http://rvm.io)
 #   branch       - Branch name to deploy. (needed by mina/git)
 
 set :user, 'justin'
-set :domain, '162.216.16.239'
-set :port, 444
-set :deploy_to, '/home/justin/rails_apps/tvtoday.20dots.com/'
+# set :domain, '162.216.16.239'
+set :domain, '198.74.60.86'
+set :identity_file, '/Users/justindoody_transfer/.ssh/linode_key'
+set :port, 22
+set :deploy_to, '/home/justin/sites/tvtoday.20dots.com/app'
 set :repository, 'https://github.com/justindoody/tvtoday.git'
 set :branch, 'master'
 
@@ -21,7 +23,7 @@ set_default :rails_env, 'production'
 # Manually create these paths in shared/ (eg: shared/config/database.yml) in your server.
 # They will be linked in the 'deploy:link_shared_paths' step.
 set :shared_paths, ['config/database.yml', 'config/secrets.yml', 'log']
-set :rvm_path, "/usr/local/rvm/scripts/rvm"
+set :rvm_path, "/home/justin/.rvm/scripts/rvm"
 
 
 # This task is the environment that is loaded for most commands, such as
@@ -45,6 +47,13 @@ task :setup => :environment do
   queue  %[echo "-----> Be sure to edit '#{deploy_to}/#{shared_path}/config/database.yml'."]
 end
 
+task :restart do
+  # Passenger watches the timestamp on this file and restars when it changes
+  # This way we avoid a full nginx restart/reload
+  queue %[mkdir #{deploy_to}/current/tmp/]
+  queue %[touch #{deploy_to}/current/tmp/restart.txt]
+end
+
 desc "Deploys the current version to the server."
 task :deploy => :environment do
   deploy do
@@ -58,8 +67,7 @@ task :deploy => :environment do
     invoke :'deploy:cleanup'
 
     to :launch do
-      # queue "mkdir -p #{deploy_to}/#{current_path}/tmp/"
-      queue 'sudo service apache2 restart'
+      invoke :restart
     end
   end
 end

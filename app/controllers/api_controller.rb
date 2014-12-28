@@ -33,6 +33,7 @@ class ApiController < ApplicationController
 
   def tvdbid
     @show = Show.find_by_tvdbId(params[:id])
+    
     respond_to do |format|
       format.html
       format.xml  { render :xml => @show }
