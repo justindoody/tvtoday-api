@@ -29,3 +29,5 @@ end
 
 # With rvm
 # 40 * * * * cd /home/justin/rails_apps/tvtoday.20dots.com/current/ && /usr/local/rvm/bin/rvm ruby-2.1.2 do /usr/local/rvm/gems/ruby-2.1.2/bin/rake RAILS_ENV=production tvtoday_api:update_api
+
+# 40 * * * * cd /home/justin/sites/tvtoday.20dots.com/app/current/ && /home/justin/.rvm/bin/rvm ruby-2.1.5 do /home/justin/.rvm/gems/ruby-2.1.5/bin/rake RAILS_ENV=production tvtoday_api:update_api
