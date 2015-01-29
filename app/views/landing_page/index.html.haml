@@ -2,7 +2,7 @@
   #col1
     = image_tag("logo.png", id: "logo")
     %h1 TV TODAY
-    %h2 os x extension
+    %h2 mac app
 
     .tag You tell us what.
     .tag We'll tell you when.
@@ -10,17 +10,17 @@
     %a{:href => "http://www.apple.com/osx/apps/app-store/", :id => "app_store_button", :onclick => "ga('send', 'event', 'button', 'click', 'app store', 1);"} 
       install on the app store
 
-  #col2
-    = image_tag("preview_search.jpg", class: "preview")
-    = image_tag("preview_edit.jpg", class: "preview")
-    = image_tag("preview_today.jpg", class: "preview")
-    = image_tag("preview_today_detailed.jpg", class: "preview")
-
+  #col2  
+    .banner
+      %ul
+        %li= image_tag("first.png")
+        %li= image_tag("second.png")
+        %li= image_tag("third.png")
+ 
   #footer
     Follow 
     %a{:href => "http://twitter.com/TVTodayWidget", :onclick => "ga('send', 'event', 'button', 'click', 'twitter', 1);"}@TVTodayWidget 
-    on Twitter
-    %br
+    on Twitter - 
     A
     %a{:href => "http://20dots.com"} 20 Dots
     app
