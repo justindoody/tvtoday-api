@@ -164,3 +164,28 @@ ol {
   -moz-transition: background .5s, opacity .5s;
   transition: background .5s, opacity .5s;
 }
+
+@media only screen and (max-width: 1110px) {
+  .landing_page {
+    width: 740px;
+  }
+
+  #col1 {
+    margin-top: 30px;
+    width: 740px;
+  }
+
+  .logo_container {
+    float: left;
+    width: 50%;
+  }
+  .install_container {
+    float: left;
+    width: 50%;
+    margin-top: 40px;
+  }
+
+  h2 { margin-bottom: 30px;}
+  #app_store_button {margin-left: 65px}
+
+}

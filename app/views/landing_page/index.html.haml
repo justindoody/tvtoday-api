@@ -1,14 +1,16 @@
 .landing_page
   #col1
-    = image_tag("logo.png", id: "logo")
-    %h1 TV TODAY
-    %h2 mac app
+    .logo_container
+      = image_tag("logo.png", id: "logo")
+      %h1 TV TODAY
+      %h2 mac app
 
-    .tag You tell us what.
-    .tag We'll tell you when.
+    .install_container
+      .tag You tell us what.
+      .tag We'll tell you when.
 
-    %a{:href => "http://www.apple.com/osx/apps/app-store/", :id => "app_store_button", :onclick => "ga('send', 'event', 'button', 'click', 'app store', 1);"} 
-      install on the app store
+      %a{:href => "http://www.apple.com/osx/apps/app-store/", :id => "app_store_button", :onclick => "ga('send', 'event', 'button', 'click', 'app store', 1);"} 
+        install on the app store
 
   #col2  
     .banner
