@@ -15,10 +15,8 @@ namespace :tvtoday_api do
         show.updateShowFromTVDB
         count += 1
       rescue => e
-        Rails.logger.warn "Failed updating #{show.name}"
+        Rails.logger.warn "Error: Failed updating #{show.name}"
         Rails.logger.warn e.message
-        Rails.logger.warn e.backtrace.inspect
-        Rails.logger.warn e
         next 
       end
     end
@@ -27,9 +25,4 @@ namespace :tvtoday_api do
 end
 
 # Le Cron
-# 40 * * * * cd /home/justin/rails_apps/tvtoday.20dots.com/current/ && /usr/local/rvm/gems/ruby-2.1.2/bin/rake RAILS_ENV=production tvtoday_api:update_api
-
-# With rvm
-# 40 * * * * cd /home/justin/rails_apps/tvtoday.20dots.com/current/ && /usr/local/rvm/bin/rvm ruby-2.1.2 do /usr/local/rvm/gems/ruby-2.1.2/bin/rake RAILS_ENV=production tvtoday_api:update_api
-
-# 40 * * * * cd /home/justin/sites/tvtoday.20dots.com/app/current/ && /home/justin/.rvm/bin/rvm ruby-2.1.5 do /home/justin/.rvm/gems/ruby-2.1.5/bin/rake RAILS_ENV=production tvtoday_api:update_api
+# 0 * * * * cd /home/justin/sites/tvtoday.20dots.com/app/current/ && /home/justin/.rvm/bin/rvm ruby-2.2.0 do /home/justin/.rvm/rubies/ruby-2.2.0/bin/rake RAILS_ENV=production tvtoday_api:update_api

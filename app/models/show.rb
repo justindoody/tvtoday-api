@@ -51,10 +51,11 @@ class Show < ActiveRecord::Base
     end 
 
     # Make sure all attributes aren't empty issue, prevOnDate should always be set
-    if (!r["prevOnDate"].empty?)
+    if (r["prevOnDate"].present?)
       # Update the actual model
       self.update_attributes(nextEpisodeName: r["nextName"], nextEpisodeDate: r["nextOnDate"], nextEpisodeTime: airs, nextSeasonAndEpisode: r["nextSeasonAndEpisode"], nextEpisodeDescription: r["nextDescription"], prevEpisodeName: r["prevName"], prevEpisodeDate: r["prevOnDate"], prevEpisodeTime: airs, prevSeasonAndEpisode: r["prevSeasonAndEpisode"], prevEpisodeDescription: r["prevDescription"], canceled: canceled)
-      # Rails.logger.info "Data for #{self.name} has changed."
+    else
+      Rails.logger.info "Data for #{self.name} couldn't be set correctly."
     end
   end
 end
