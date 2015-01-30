@@ -16,11 +16,13 @@ namespace :tvtoday_api do
         count += 1
       rescue => e
         Rails.logger.warn "Failed updating #{show.name}"
-        count -= 1
+        Rails.logger.warn e.message
+        Rails.logger.warn e.backtrace.inspect
+        Rails.logger.warn e
         next 
       end
     end
-    Rails.logger.info "Successfully Updated #{count} Shows"
+    Rails.logger.info "Successfully Checked #{count} Shows"
   end
 end
 

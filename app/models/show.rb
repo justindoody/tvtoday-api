@@ -54,7 +54,7 @@ class Show < ActiveRecord::Base
     if (!r["prevOnDate"].empty?)
       # Update the actual model
       self.update_attributes(nextEpisodeName: r["nextName"], nextEpisodeDate: r["nextOnDate"], nextEpisodeTime: airs, nextSeasonAndEpisode: r["nextSeasonAndEpisode"], nextEpisodeDescription: r["nextDescription"], prevEpisodeName: r["prevName"], prevEpisodeDate: r["prevOnDate"], prevEpisodeTime: airs, prevSeasonAndEpisode: r["prevSeasonAndEpisode"], prevEpisodeDescription: r["prevDescription"], canceled: canceled)
-      Rails.logger.info "Data for #{self.name} has changed."
+      # Rails.logger.info "Data for #{self.name} has changed."
     end
   end
 end
