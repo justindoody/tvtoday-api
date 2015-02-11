@@ -53,8 +53,6 @@ class Show < ActiveRecord::Base
     end
   end
 
-  private
-
   def season_episode_string(season, episode)
     season.to_s.insert(0, season >= 10 ? "S" : "S0") + episode.to_s.insert(0, episode >= 10 ? "E" : "E0")
   end
