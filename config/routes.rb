@@ -1,23 +1,19 @@
 Rails.application.routes.draw do
   root 'landing_page#index'
 
-  get 'landing_page/index'
-  
-  get 'api/tvdbid/:id', to: 'api#tvdbid', as: :tvdbid
-  get 'api/name/:id', to: 'api#name', as: :name
+  namespace :api do
+    resources :shows, only: [:index, :new, :create]
 
-  post 'api/sync', to: 'api#sync', as: :sync
+    root  'shows#index'
+    post  'sync',           to: 'shows#sync'
+    get   'tvdbid/:id',     to: 'shows#tvdbid',       as: :tvdbid
+    get   'shows_updated',  to: 'shows#last_updated', as: :last_updated
+    get   'update_all',     to: 'shows#update_all',   as: :update_all_shows
+  end
 
-  get 'parse/:id', to: 'api#parse', as: :parse
-
-  get 'api/new', to: 'api#new', as: :new
-  post 'api/create', to: 'api#create', as: :create
-  get 'api', to: 'api#index', as: :api_index
-  get 'api/p/:id', to: 'api#index', as: :api_index_admin
-
-  get 'api/shows', to: 'api#shows_json'
-  get 'api/shows_updated', to: 'api#shows_updated'
-
-  get 'api/update_all', to: 'api#update_shows', as: :updateShows
+  # Solo admin user, new and destroy refers to a session
+  get    'login',    to: 'user#new'
+  delete 'logout',   to: 'user#destroy'
+  resources :user, only: [:new, :create, :destroy]
 
 end

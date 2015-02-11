@@ -1,0 +1,14 @@
+.wrap
+  .api_container
+    %h3= link_to "TV Today API", api_shows_path
+    %h1 Admin Login
+
+    - flash.each do |message_type, message|
+      %div{:class => "alert alert-#{message_type}"}
+        = message
+
+    %br
+    = form_for(:user, url: user_index_path) do |f|
+      = f.password_field :password, placeholder: "Password"
+      %br
+      = f.submit "Log In"

@@ -11,32 +11,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141123230215) do
+ActiveRecord::Schema.define(version: 20150210234714) do
 
-  create_table "show_logs", force: true do |t|
-    t.string   "log"
+  create_table "show_logs", force: :cascade do |t|
+    t.string   "log",        limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "shows", force: true do |t|
-    t.string   "name"
+  create_table "shows", force: :cascade do |t|
+    t.string   "name",                   limit: 255
     t.integer  "tvdbId"
     t.boolean  "canceled"
-    t.string   "nextEpisodeName"
-    t.string   "nextEpisodeDate"
-    t.string   "nextEpisodeTime"
-    t.string   "nextSeasonAndEpisode"
+    t.string   "nextEpisodeName",        limit: 255
+    t.string   "nextEpisodeDate",        limit: 255
+    t.string   "nextEpisodeTime",        limit: 255
+    t.string   "nextSeasonAndEpisode",   limit: 255
     t.text     "nextEpisodeDescription"
-    t.string   "prevEpisodeName"
-    t.string   "prevEpisodeDate"
-    t.string   "prevEpisodeTime"
-    t.string   "prevSeasonAndEpisode"
+    t.string   "prevEpisodeName",        limit: 255
+    t.string   "prevEpisodeDate",        limit: 255
+    t.string   "prevEpisodeTime",        limit: 255
+    t.string   "prevSeasonAndEpisode",   limit: 255
     t.text     "prevEpisodeDescription"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "shows", ["tvdbId"], name: "index_shows_on_tvdbId", unique: true
+
+  create_table "users", force: :cascade do |t|
+    t.string   "password_digest"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

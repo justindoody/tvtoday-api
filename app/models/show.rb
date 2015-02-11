@@ -2,7 +2,7 @@ class Show < ActiveRecord::Base
   require 'open-uri'
   require 'date'
 
-  def updateShowFromTVDB
+  def update_from_tvdb
     date = DateTime.now.strftime("%Y%m%d")
     # Might need to update to include en.xml for english, may have caused prior issues
     doc = Nokogiri::XML(open("http://thetvdb.com/api/F61D51F3290EE202/series/#{self.tvdbId}/all/"))
@@ -27,12 +27,10 @@ class Show < ActiveRecord::Base
       if (airDash < date && airDash != "")
         r["prevName"] = doc2.search(".//EpisodeName").map{|a| a.text}[0]
         r["prevDescription"] = doc2.search(".//Overview").map{|a| a.text}[0]
-        season = doc2.search(".//Combined_season").map{|a| a.text}[0]
-        episode = doc2.search(".//Combined_episodenumber").map{|a| a.text}[0]
-        # Need to later check if double digits
-        season = season.to_i >= 10 ? "S"+season : "S0"+season
-        episode = episode.to_i >= 10 ? "E"+episode : "E0"+episode
-        r["prevSeasonAndEpisode"] = season+episode
+        season = doc2.search(".//Combined_season").map{|a| a.text}[0].to_i
+        episode = doc2.search(".//Combined_episodenumber").map{|a| a.text}[0].to_i
+
+        r["prevSeasonAndEpisode"] = season_episode_string(season,episode)
         r["prevOnDate"] = air
 
         break
@@ -41,21 +39,23 @@ class Show < ActiveRecord::Base
       # Set the details for the next episode 
       r["nextName"] = doc2.search(".//EpisodeName").map{|a| a.text}[0]
       r["nextDescription"] = doc2.search(".//Overview").map{|a| a.text}[0]
-      season = doc2.search(".//Combined_season").map{|a| a.text}[0]
-      episode = doc2.search(".//Combined_episodenumber").map{|a| a.text}[0]
-      season = season.to_i >= 10 ? "S"+season : "S0"+season
-      episode = episode.to_i >= 10 ? "E"+episode : "E0"+episode
-      # Need to later check if double digits
-      r["nextSeasonAndEpisode"] = season+episode
+      season = doc2.search(".//Combined_season").map{|a| a.text}[0].to_i
+      episode = doc2.search(".//Combined_episodenumber").map{|a| a.text}[0].to_i
+
+      r["nextSeasonAndEpisode"] = season_episode_string(season,episode)
       r["nextOnDate"] = air
     end 
 
-    # Make sure all attributes aren't empty issue, prevOnDate should always be set
-    if (r["prevOnDate"].present?)
-      # Update the actual model
-      self.update_attributes(nextEpisodeName: r["nextName"], nextEpisodeDate: r["nextOnDate"], nextEpisodeTime: airs, nextSeasonAndEpisode: r["nextSeasonAndEpisode"], nextEpisodeDescription: r["nextDescription"], prevEpisodeName: r["prevName"], prevEpisodeDate: r["prevOnDate"], prevEpisodeTime: airs, prevSeasonAndEpisode: r["prevSeasonAndEpisode"], prevEpisodeDescription: r["prevDescription"], canceled: canceled)
+ 
+    if self.update_attributes(nextEpisodeName: r["nextName"], nextEpisodeDate: r["nextOnDate"], nextEpisodeTime: airs, nextSeasonAndEpisode: r["nextSeasonAndEpisode"], nextEpisodeDescription: r["nextDescription"], prevEpisodeName: r["prevName"], prevEpisodeDate: r["prevOnDate"], prevEpisodeTime: airs, prevSeasonAndEpisode: r["prevSeasonAndEpisode"], prevEpisodeDescription: r["prevDescription"], canceled: canceled)
     else
       Rails.logger.info "Data for #{self.name} couldn't be set correctly."
     end
+  end
+
+  private
+
+  def season_episode_string(season, episode)
+    season.to_s.insert(0, season >= 10 ? "S" : "S0") + episode.to_s.insert(0, episode >= 10 ? "E" : "E0")
   end
 end
