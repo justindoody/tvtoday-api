@@ -11,6 +11,7 @@ class Show < ActiveRecord::Base
     air_time = show_data.at_xpath("//Airs_Time").content
     ep = load_episode_details( show_data.xpath("//Episode") ) # Fetches episode data
 
+    set_show_details(canceled, air_time, ep)
     saved = self.save
     Rails.logger.info "Data for #{self.name} failed saving" unless saved
   end
