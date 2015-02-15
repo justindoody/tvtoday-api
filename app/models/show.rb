@@ -3,21 +3,13 @@ class Show < ActiveRecord::Base
   require 'date'
 
   def update_from_tvdb
-    date = DateTime.now.strftime("%Y%m%d")
-    # Might need to update to include en.xml for english, may have caused prior issues
     doc = Nokogiri::XML(open("http://thetvdb.com/api/F61D51F3290EE202/series/#{self.tvdbId}/all/"))
-    airs = doc.xpath("//Airs_Time").map{|a| a.text}[0]
-    status = doc.xpath("//Status").map{|a| a.text}[0]
-    episodes = doc.xpath("//Episode")
 
-    if (status)
-      if (status.downcase == "continuing")
-        canceled = false
-      elsif (status.downcase == "ended")
-        canceled = true
-      end
-    end
-
+    canceled = show_canceled? doc
+    airs = doc.at_xpath("//Airs_Time").content
+    
+    episodes = doc.xpath("//Episode") # Fetches an array of episode data
+    date = DateTime.now.strftime("%Y%m%d")
     r = {}
     episodes.reverse_each do |e|
       doc2 = Nokogiri::XML::DocumentFragment.parse(e)
@@ -56,4 +48,15 @@ class Show < ActiveRecord::Base
   def season_episode_string(season, episode)
     season.to_s.insert(0, season >= 10 ? "S" : "S0") + episode.to_s.insert(0, episode >= 10 ? "E" : "E0")
   end
+
+  def show_canceled?(show_xml_document)
+    status = show_xml_document.at_xpath("//Status").content.downcase
+    
+    unless status.blank?
+      canceled_status = true if status == "ended"
+      canceled_status = false if status == "continuing"
+      return canceled_status
+    end
+  end
+
 end
