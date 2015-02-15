@@ -48,7 +48,7 @@ class Show < ActiveRecord::Base
       season_and_episode = season_episode_string(season, episode_num)
 
       # Set previous unless the airdate is blank or greater than todays date
-      unless air_date.blank? || air_date.gsub(/-/, "").to_i > date
+      unless air_date.blank? || air_date.gsub(/-/, "").to_i >= date
         ep[:previous][:name] = name
         ep[:previous][:description] = description
         ep[:previous][:season_and_episode] = season_and_episode
