@@ -2,47 +2,17 @@ class Show < ActiveRecord::Base
   require 'open-uri'
   require 'date'
 
+  # Fetches and parses show and episode data from thetvdb.com
+  # Saves data only for previous and next episode
   def update_from_tvdb
-    doc = Nokogiri::XML(open("http://thetvdb.com/api/F61D51F3290EE202/series/#{self.tvdbId}/all/"))
+    show_data = Nokogiri::XML(open("http://thetvdb.com/api/F61D51F3290EE202/series/#{self.tvdbId}/all/"))
 
-    canceled = show_canceled? doc
-    airs = doc.at_xpath("//Airs_Time").content
-    
-    episodes = doc.xpath("//Episode") # Fetches an array of episode data
-    date = DateTime.now.strftime("%Y%m%d")
-    r = {}
-    episodes.reverse_each do |e|
-      doc2 = Nokogiri::XML::DocumentFragment.parse(e)
-      air = doc2.search(".//FirstAired").map{|a| a.text}[0]
-      airDash = air.gsub(/-/, "")
+    canceled = show_canceled? show_data
+    air_time = show_data.at_xpath("//Airs_Time").content
+    ep = load_episode_details( show_data.xpath("//Episode") ) # Fetches episode data
 
-      if (airDash < date && airDash != "")
-        r["prevName"] = doc2.search(".//EpisodeName").map{|a| a.text}[0]
-        r["prevDescription"] = doc2.search(".//Overview").map{|a| a.text}[0]
-        season = doc2.search(".//Combined_season").map{|a| a.text}[0].to_i
-        episode = doc2.search(".//Combined_episodenumber").map{|a| a.text}[0].to_i
-
-        r["prevSeasonAndEpisode"] = season_episode_string(season,episode)
-        r["prevOnDate"] = air
-
-        break
-      end
-
-      # Set the details for the next episode 
-      r["nextName"] = doc2.search(".//EpisodeName").map{|a| a.text}[0]
-      r["nextDescription"] = doc2.search(".//Overview").map{|a| a.text}[0]
-      season = doc2.search(".//Combined_season").map{|a| a.text}[0].to_i
-      episode = doc2.search(".//Combined_episodenumber").map{|a| a.text}[0].to_i
-
-      r["nextSeasonAndEpisode"] = season_episode_string(season,episode)
-      r["nextOnDate"] = air
-    end 
-
- 
-    if self.update_attributes(nextEpisodeName: r["nextName"], nextEpisodeDate: r["nextOnDate"], nextEpisodeTime: airs, nextSeasonAndEpisode: r["nextSeasonAndEpisode"], nextEpisodeDescription: r["nextDescription"], prevEpisodeName: r["prevName"], prevEpisodeDate: r["prevOnDate"], prevEpisodeTime: airs, prevSeasonAndEpisode: r["prevSeasonAndEpisode"], prevEpisodeDescription: r["prevDescription"], canceled: canceled)
-    else
-      Rails.logger.info "Data for #{self.name} couldn't be set correctly."
-    end
+    saved = self.save
+    Rails.logger.info "Data for #{self.name} failed saving" unless saved
   end
 
   def season_episode_string(season, episode)
@@ -57,6 +27,58 @@ class Show < ActiveRecord::Base
       canceled_status = false if status == "continuing"
       return canceled_status
     end
+  end
+
+  def load_episode_details(episodes_xml)
+    date = DateTime.now.strftime("%Y%m%d").to_i
+    ep = {previous: {}, next: {}}
+
+    # Starting at the end is quicker in the majority of cases
+    episodes_xml.reverse_each do |e|
+      episode = Nokogiri::XML::DocumentFragment.parse(e)
+      
+      # Parses episode air date and removes dashes to use as an int
+      air_date = episode.at_xpath(".//FirstAired").content
+
+      name = episode.at_xpath(".//EpisodeName").content
+      description = episode.at_xpath(".//Overview").content
+      season = episode.at_xpath(".//SeasonNumber").content.to_i
+      episode_num = episode.at_xpath(".//EpisodeNumber").content.to_i
+      season_and_episode = season_episode_string(season, episode_num)
+
+      # Set previous unless the airdate is blank or greater than todays date
+      unless air_date.blank? || air_date.gsub(/-/, "").to_i > date
+        ep[:previous][:name] = name
+        ep[:previous][:description] = description
+        ep[:previous][:season_and_episode] = season_and_episode
+        ep[:previous][:airdate] = air_date
+
+        break # Iterate backward until we match the previous episode and quit searching
+      end
+
+      # Set the details for the next episode, reset each loop
+      ep[:next][:name] = name
+      ep[:next][:description] = description
+      ep[:next][:season_and_episode] = season_and_episode
+      ep[:next][:airdate] = air_date
+    end 
+    return ep
+  end
+
+  def set_show_details(canceled, airtime, episodes)
+    self.nextEpisodeName = episodes[:next][:name]
+    self.nextEpisodeDate = episodes[:next][:airdate]
+    self.nextSeasonAndEpisode = episodes[:next][:season_and_episode]
+    self.nextEpisodeDescription = episodes[:next][:description]
+    self.nextEpisodeTime = airtime
+
+    self.prevEpisodeName = episodes[:previous][:name]
+    self.prevEpisodeDate = episodes[:previous][:airdate]
+    self.prevSeasonAndEpisode = episodes[:previous][:season_and_episode]
+    self.prevEpisodeDescription = episodes[:previous][:description]
+    self.prevEpisodeTime = airtime
+
+    self.canceled = canceled
   end
 
 end
