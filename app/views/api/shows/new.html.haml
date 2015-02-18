@@ -1,19 +1,20 @@
 .wrap
   .api_container
-    %h3= link_to "TV Today API", api_shows_path
+    %h3= link_to 'TV Today API', api_shows_path
     %h1 Add A New Show
-    %a{:href => "http://thetvdb.com/api/GetSeries.php?seriesname="} thetvdb series search
+    %a{ href: 'http://thetvdb.com/api/GetSeries.php?seriesname=' }
+      thetvdb series search
     %br
     %br
-    = form_for @show, url: {action: "create"}, html: {method: "post"} do |f|
-      = f.label "Name: "
+    = form_for @show, url: { action: 'create' }, html: { method: 'post' } do |f|
+      = f.label 'Name: '
       %br
       = f.text_field :name
       %br
       %br
-      = f.label "TVDB ID: "
+      = f.label 'TVDB ID: '
       %br
       = f.text_field :tvdbId
       %br
       %br
-      = f.submit "Add Show"
+      = f.submit 'Add Show'

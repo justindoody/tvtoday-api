@@ -1,20 +1,20 @@
 .wrap
   .api_container
-    %h3= link_to "TV Today API", api_shows_path
+    %h3= link_to 'TV Today API', api_shows_path
 
     .session= link_to "sign #{@user[:state]}", eval("log#{@user[:state]}_path"), method: "#{@user[:method]}"
     - flash.each do |message_type, message|
-      %div{:class => "alert alert-#{message_type}"}
+      %div{ class: "alert alert-#{message_type}" }
         = message
 
     %h1 Show List
-    - if @user[:state] == "out"
-      = link_to "Add a Show", new_api_show_path
+    - if @user[:state] == 'out'
+      = link_to 'Add a Show', new_api_show_path
       , 
-      = link_to "Update All Shows", api_update_all_shows_path
-    
+      = link_to 'Update All Shows', api_update_all_shows_path
+
     %strong.count Show Count: #{@shows.count}
 
     #show-container
       - @shows.each do |show|
-        %p= link_to( show.name, api_tvdbid_path(show.tvdbId, format: :json) )
+        %p= link_to(show.name, api_tvdbid_path(show.tvdbId, format: :json))

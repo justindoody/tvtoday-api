@@ -28,7 +28,7 @@ class ShowTest < ActiveSupport::TestCase
     assert_not @show.show_canceled?(doc)
   end
 
-  # This method calls th season_episode_string one.. i should stub out
+  # This method calls the season_episode_string one.. i should stub out
   test "load episode details" do
     doc = Nokogiri::XML(File.open(File.expand_path("../homeland_test_data.xml", __FILE__)))
     episodes = doc.xpath("//Episode")
