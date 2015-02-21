@@ -1,28 +1,18 @@
-== README
+==TV Today README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A simple, fast app and extension for tracking tv shows. 
 
-Things you may want to cover:
+TV Today runs as both a standalone App and a Notification Center Widget making it incredibly easy to track and view your favorite tv show schedules. See at a glance upcoming episode descriptions, season and episode number, airtime and more.
 
-* Ruby version
+==API
 
-* System dependencies
+Uses thetvdb.com for data collecting and storing only next and previous episode information including episode title, description, time, date, and show status. This much smaller data set is provided in json format.
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Clients sync by posting a list of show id's being tracked and recieving back anything out of sync, thus limiting and speeding up sync times. Episode data on the client is also downloaded sychronously with multithreading. Basically it syncs <b>really really fast</b>
 
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+* Primary dependency is Nokogiri for parsing XML
+
+* Services: Hourly cron rake task to sync show data
+
+Twitter: @TVTodayWidget
