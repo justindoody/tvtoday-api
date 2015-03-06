@@ -8,7 +8,7 @@ module UserHelper
   end
 
   def logged_in_user
-      redirect_to login_path, notice: "Please sign in." unless logged_in?
+    redirect_to login_path, notice: 'Please sign in.' unless logged_in?
   end
 
   def current_user

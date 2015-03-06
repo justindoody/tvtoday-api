@@ -41,6 +41,7 @@ group :development, :test do
   gem 'guard'
   gem 'guard-minitest'
   gem 'minitest-reporters'
+  gem 'rails_best_practices'
 end
 
 group :production do

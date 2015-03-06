@@ -6,12 +6,12 @@ module Api
     def index
       respond_to do |format|
         format.html do
-          @user = logged_in? ? {state: 'out', method: 'delete'} : {state: 'in', method: 'get'}
+          @user = logged_in? ? { state: 'out', method: 'delete'} : {state: 'in', method: 'get' }
           @shows = Show.all.order(:name)
         end
         format.json do
-          shows = Show.select("name, tvdbId")
-          render :json => shows.to_json(only: [ :name, :tvdbId ]) 
+          shows = Show.select('name, tvdbId')
+          render :json => shows.to_json(only: [ :name, :tvdbId ])
         end
       end
     end
@@ -31,10 +31,10 @@ module Api
     def update_all
       shows = Show.all
       shows.each { |show| show.update_from_tvdb }
-      flash[:info] = "All shows were updated"
+      flash[:info] = 'All shows were updated'
       redirect_to api_shows_path
     end
-    
+
     # last_updated checks if master show lists are in sync
     def last_updated
       updated = ShowLog.select(:id, :created_at).last
@@ -48,7 +48,7 @@ module Api
         show = Show.find_by_tvdbId(k) # This is innefficient at the moment
         results << k.to_i unless show.updated_at.to_i == v.to_i
       end
-      render json: results.to_json   
+      render json: results.to_json
     end
 
     def tvdbid
@@ -63,6 +63,5 @@ module Api
     def post_params
       params.require(:show).permit(:name, :tvdbId)
     end
-
   end
 end
