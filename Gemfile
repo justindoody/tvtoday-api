@@ -1,9 +1,8 @@
 source 'https://rubygems.org'
+ruby '2.3.0'
 
-
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
+gem 'dotenv-rails'
 gem 'rails', '~> 4.2.0'
-# Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
@@ -46,6 +45,5 @@ end
 
 group :production do
   gem 'mysql2'
+  gem 'newrelic_rpm'
 end
-
-gem 'newrelic_rpm'

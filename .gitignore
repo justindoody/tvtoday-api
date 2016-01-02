@@ -16,9 +16,5 @@
 /tmp
 /
 
-# Database password
-/config/database.yml
-/config/secrets.yml
-
-# Remove the deploy script, not totally necessary but whatevs
+.env
 /config/deploy.rb
