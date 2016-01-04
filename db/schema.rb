@@ -11,7 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150210234714) do
+ActiveRecord::Schema.define(version: 20160104015016) do
+
+  create_table "episodes", force: :cascade do |t|
+    t.string   "name"
+    t.date     "air_date"
+    t.time     "air_time"
+    t.integer  "season"
+    t.integer  "number"
+    t.text     "description", default: ""
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.integer  "show_id"
+    t.string   "kind"
+  end
+
+  add_index "episodes", ["kind"], name: "index_episodes_on_kind"
+  add_index "episodes", ["show_id"], name: "index_episodes_on_show_id"
 
   create_table "show_logs", force: :cascade do |t|
     t.string   "log",        limit: 255
@@ -20,19 +36,9 @@ ActiveRecord::Schema.define(version: 20150210234714) do
   end
 
   create_table "shows", force: :cascade do |t|
-    t.string   "name",                   limit: 255
+    t.string   "name",       limit: 255
     t.integer  "tvdbId"
     t.boolean  "canceled"
-    t.string   "nextEpisodeName",        limit: 255
-    t.string   "nextEpisodeDate",        limit: 255
-    t.string   "nextEpisodeTime",        limit: 255
-    t.string   "nextSeasonAndEpisode",   limit: 255
-    t.text     "nextEpisodeDescription"
-    t.string   "prevEpisodeName",        limit: 255
-    t.string   "prevEpisodeDate",        limit: 255
-    t.string   "prevEpisodeTime",        limit: 255
-    t.string   "prevSeasonAndEpisode",   limit: 255
-    t.text     "prevEpisodeDescription"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

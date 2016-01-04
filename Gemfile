@@ -27,11 +27,11 @@ gem 'spring',        group: :development
 gem 'bcrypt', '~> 3.1.7'
 
 gem 'haml'
-
+gem 'redis-rails'
 # Parses the tvdb xml files
 gem 'nokogiri'
 
-gem "active_model_serializers", "~> 0.8.0"
+gem "active_model_serializers", "~> 0.9.0"
 
 group :development, :test do
   # Use sqlite3 as the database for Active Record

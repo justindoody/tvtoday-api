@@ -6,12 +6,14 @@ module Api
     def index
       respond_to do |format|
         format.html do
-          @user = logged_in? ? { state: 'out', method: 'delete'} : {state: 'in', method: 'get' }
           @shows = Show.all.order(:name)
         end
         format.json do
-          shows = Show.select('name, tvdbId')
-          render :json => shows.to_json(only: [ :name, :tvdbId ])
+          shows = Rails.cache.fetch('all_shows') do
+            Show.select('name, tvdbId').to_json(only: [ :name, :tvdbId ])
+          end
+
+          render json: shows
         end
       end
     end
@@ -21,16 +23,22 @@ module Api
     end
 
     def create
-      show = Show.create(post_params)
-      show.update_from_tvdb
-      ShowLog.create(log: "Added Show: #{params[:show][:name]}")
-      flash[:info] = "Added #{show.name} to the database."
-      redirect_to api_shows_path
+      @show = Show.new(post_params)
+      @show.update_from_tvdb
+
+      if @show.save
+        ShowLog.create(log: "Added Show: #{@show.name}")
+        flash[:info] = "Added #{@show.name} to the tracker."
+        redirect_to api_shows_path
+      else
+        flash[:warning] = @show.errors.full_messages
+        render action: :new
+      end
     end
 
     def update_all
-      shows = Show.all
-      shows.each { |show| show.update_from_tvdb }
+      Show.find_each(&:update_from_tvdb)
+
       flash[:info] = 'All shows were updated'
       redirect_to api_shows_path
     end
@@ -43,19 +51,27 @@ module Api
 
     # Sync recieves a POST from the app of all shows being followed, tvdbid retrieves each show
     def sync
-      results = []
-      params[:shows].each do |k, v|
-        show = Show.find_by_tvdbId(k) # This is innefficient at the moment
-        results << k.to_i unless show.updated_at.to_i == v.to_i
-      end
-      render json: results.to_json
+      shows = params[:shows]
+
+      outdated_ids = Show.where(tvdbId: shows.keys).map do |show|
+        show.tvdbId if show.outdated_data?(shows[show.tvdbId.to_s])
+      end.compact
+
+      # this really ought to just post back the necessary data to avoid a bunch of calls...
+      render json: outdated_ids.to_json
     end
 
     def tvdbid
-      show = Show.find_by_tvdbId(params[:id])
-      respond_to do |format|
-        format.json { render json: show, root: false }
+      tvdbid = params[:id]
+      show = Rails.cache.fetch("tvdbid/#{tvdbid}") do
+        Show.find_by_tvdbId(tvdbid)
       end
+
+      json = cache ['v1', show] do
+        render_to_string json: show, root: false
+      end
+
+      render json: json
     end
 
     private

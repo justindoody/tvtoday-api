@@ -2,13 +2,16 @@
   .api_container
     %h3= link_to 'TV Today API', api_shows_path
 
-    .session= link_to "sign #{@user[:state]}", eval("log#{@user[:state]}_path"), method: "#{@user[:method]}"
-    - flash.each do |message_type, message|
-      %div{ class: "alert alert-#{message_type}" }
-        = message
+    .session
+      - if logged_in?
+        = link_to "sign out", logout_path, method: 'delete'
+      - else
+        = link_to "sign in", login_path
+
+    = render 'flash'
 
     %h1 Show List
-    - if @user[:state] == 'out'
+    - if logged_in?
       = link_to 'Add a Show', new_api_show_path
       ,
       = link_to 'Update All Shows', api_update_all_shows_path

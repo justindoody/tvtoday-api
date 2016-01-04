@@ -2,6 +2,9 @@
   .api_container
     %h3= link_to 'TV Today API', api_shows_path
     %h1 Add A New Show
+
+    = render 'flash'
+
     %a{ href: 'http://thetvdb.com/api/GetSeries.php?seriesname=' }
       thetvdb series search
     %br
