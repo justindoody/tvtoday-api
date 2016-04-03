@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160104015016) do
+ActiveRecord::Schema.define(version: 20160104021249) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "episodes", force: :cascade do |t|
     t.string   "name"
@@ -26,24 +29,24 @@ ActiveRecord::Schema.define(version: 20160104015016) do
     t.string   "kind"
   end
 
-  add_index "episodes", ["kind"], name: "index_episodes_on_kind"
-  add_index "episodes", ["show_id"], name: "index_episodes_on_show_id"
+  add_index "episodes", ["kind"], name: "index_episodes_on_kind", using: :btree
+  add_index "episodes", ["show_id"], name: "index_episodes_on_show_id", using: :btree
 
   create_table "show_logs", force: :cascade do |t|
-    t.string   "log",        limit: 255
+    t.string   "log"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "shows", force: :cascade do |t|
-    t.string   "name",       limit: 255
+    t.string   "name"
     t.integer  "tvdbId"
     t.boolean  "canceled"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "shows", ["tvdbId"], name: "index_shows_on_tvdbId", unique: true
+  add_index "shows", ["tvdbId"], name: "index_shows_on_tvdbId", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "password_digest"

@@ -16,11 +16,9 @@ class Show < ActiveRecord::Base
   # Fetches and parses show and episode data from thetvdb.com
   # Saves data only for previous and next episode
   def update_from_tvdb
-    episodes = load_episode_details
-
     self.canceled = show_canceled?
 
-    episodes.each do |type, episode|
+    tvdb_episodes.each do |type, episode|
       compare_episodes(type.to_s, episode)
     end
   end
@@ -35,7 +33,7 @@ class Show < ActiveRecord::Base
     end
   end
 
-  def load_episode_details
+  def tvdb_episodes
     data = {}
 
     # Starting at the end is quicker in the majority of cases

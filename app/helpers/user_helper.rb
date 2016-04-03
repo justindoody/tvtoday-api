@@ -1,6 +1,6 @@
 module UserHelper
   def logged_in?
-    !current_user.nil?
+    current_user.present?
   end
 
   def log_in(user)
@@ -12,8 +12,8 @@ module UserHelper
   end
 
   def current_user
-    if (user_id = session[:user_id])
-      @current_user ||= User.find_by(id: user_id)
+    if session[:user_id].present?
+      @current_user ||= User.find_by(id: session[:user_id])
     end
   end
 end

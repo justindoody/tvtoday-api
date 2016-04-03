@@ -36,17 +36,9 @@ class TvdbEpisode
     @description ||= fetch_content('.//Overview')
   end
 
-  # def number_metadata
-  #   format_metadata('S', season) + format_metadata('E', number)
-  # end
-
   private
 
     def fetch_content(xpath)
       @episode_data.at_xpath(xpath).try(:content)
     end
-
-    # def format_metadata(prepended_abbreviation, number)
-    #   "#{prepended_abbreviation}%02d" % number
-    # end
 end

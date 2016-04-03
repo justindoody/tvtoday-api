@@ -17,4 +17,5 @@
 /
 
 .env
-/config/deploy.rb
+.env.*
+/vendor/ruby
