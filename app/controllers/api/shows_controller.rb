@@ -24,9 +24,9 @@ module Api
 
     def create
       @show = Show.new(post_params)
-      @show.update_from_tvdb
 
       if @show.save
+        # Tvdb::Show.new(@show).find_latest_episodes
         ShowLog.create(log: "Added Show: #{@show.name}")
         flash[:info] = "Added #{@show.name} to the tracker."
         redirect_to api_shows_path

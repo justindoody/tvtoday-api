@@ -9,9 +9,9 @@ class Episode < ActiveRecord::Base
     air_time
   end
 
-  def same_as?(another_episode)
-    comparable(self) == comparable(another_episode)
-  end
+  # def same_as?(another_episode)
+  #   comparable(self) == comparable(another_episode)
+  # end
 
   private
 
@@ -19,8 +19,8 @@ class Episode < ActiveRecord::Base
       "#{prepended_abbreviation}%02d" % number
     end
 
-    def comparable(episode)
-      ignored_elements = ['id', 'created_at', 'updated_at']
-      episode.attributes.except(*ignored_elements)
-    end
+    # def comparable(episode)
+    #   ignored_elements = ['id', 'created_at', 'updated_at']
+    #   episode.attributes.except(*ignored_elements)
+    # end
 end

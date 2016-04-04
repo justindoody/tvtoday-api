@@ -1,21 +1,20 @@
-namespace :tvtoday_api do
+namespace :api do
   desc 'Updates the api database hourly with the latest from TVDB'
 
-  task update_api: :environment do
+  task update_shows: :environment do
     Rails.logger.info 'UPDATING THE API'
     # Sorts shows so the shows most likely to have changing data are executed first.
-    next_date_sorted = Show.where.not(nextEpisodeDate: '').order('nextEpisodeDate asc')
-    unknown_next_date = Show.where(nextEpisodeDate: ['', nil])
-    shows = next_date_sorted + unknown_next_date
+    # next_date_sorted = Show.
+    # unknown_next_date = Show.
+    # shows = next_date_sorted + unknown_next_date
 
-    shows.find_each do |show|
+    Show.find_each do |show|
       puts "Updating: #{show.name}"
       begin
-        show.update_from_tvdb
+        Tvdb::Show.new(show).find_latest_episodes
       rescue => e
         Rails.logger.warn "Error: Failed updating #{show.name}"
         Rails.logger.warn e.message
-        next
       end
     end
 
