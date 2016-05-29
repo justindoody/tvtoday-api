@@ -54,7 +54,7 @@ module Api
 
     # last_updated checks if master show lists are in sync
     def last_updated
-      updated = Show.select(:id, :created_at).last
+      updated = Show.select(:id, :created_at).last.to_json
       render json: updated
     end
 
