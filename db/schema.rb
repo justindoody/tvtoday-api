@@ -11,38 +11,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150210234714) do
+ActiveRecord::Schema.define(version: 20160529190256) do
 
-  create_table "show_logs", force: :cascade do |t|
-    t.string   "log",        limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "episodes", force: :cascade do |t|
+    t.string   "name"
+    t.date     "air_date"
+    t.time     "air_time"
+    t.integer  "season"
+    t.integer  "number"
+    t.text     "description", default: ""
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.integer  "show_id"
   end
+
+  add_index "episodes", ["show_id"], name: "index_episodes_on_show_id", using: :btree
 
   create_table "shows", force: :cascade do |t|
-    t.string   "name",                   limit: 255
+    t.string   "name"
     t.integer  "tvdbId"
     t.boolean  "canceled"
-    t.string   "nextEpisodeName",        limit: 255
-    t.string   "nextEpisodeDate",        limit: 255
-    t.string   "nextEpisodeTime",        limit: 255
-    t.string   "nextSeasonAndEpisode",   limit: 255
-    t.text     "nextEpisodeDescription"
-    t.string   "prevEpisodeName",        limit: 255
-    t.string   "prevEpisodeDate",        limit: 255
-    t.string   "prevEpisodeTime",        limit: 255
-    t.string   "prevSeasonAndEpisode",   limit: 255
-    t.text     "prevEpisodeDescription"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "previous_episode_id"
+    t.integer  "next_episode_id"
   end
 
-  add_index "shows", ["tvdbId"], name: "index_shows_on_tvdbId", unique: true
-
-  create_table "users", force: :cascade do |t|
-    t.string   "password_digest"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+  add_index "shows", ["next_episode_id"], name: "index_shows_on_next_episode_id", using: :btree
+  add_index "shows", ["previous_episode_id"], name: "index_shows_on_previous_episode_id", using: :btree
+  add_index "shows", ["tvdbId"], name: "index_shows_on_tvdbId", unique: true, using: :btree
 
 end

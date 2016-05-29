@@ -1,17 +1,25 @@
 module Api
   class ShowsController < ApplicationController
     skip_before_action :verify_authenticity_token, only: :sync
-    before_action :logged_in_user, only: [:new, :create, :update_all]
+    before_action :check_for_lockup, only: [:new, :create, :update_all]
 
     def index
       respond_to do |format|
         format.html do
-          @user = logged_in? ? { state: 'out', method: 'delete'} : {state: 'in', method: 'get' }
           @shows = Show.all.order(:name)
         end
+
         format.json do
-          shows = Show.select('name, tvdbId')
-          render :json => shows.to_json(only: [ :name, :tvdbId ])
+          shows = Rails.cache.fetch('all_shows') do
+            Show.pluck(:name, :tvdbId).map do |show|
+              {
+                name: show.first,
+                tvdbId: show.last
+              }
+            end
+          end
+
+          render json: shows.to_json(only: [ :name, :tvdbId ])
         end
       end
     end
@@ -21,47 +29,77 @@ module Api
     end
 
     def create
-      show = Show.create(post_params)
-      show.update_from_tvdb
-      ShowLog.create(log: "Added Show: #{params[:show][:name]}")
-      flash[:info] = "Added #{show.name} to the database."
-      redirect_to api_shows_path
+      @show = Show.new(post_params)
+
+      if @show.save
+        Tvdb::Show.new(@show).find_latest_episodes
+
+        flash[:info] = "Added #{@show.name} to the tracker."
+        redirect_to api_shows_path
+      else
+        flash[:warning] = @show.errors.full_messages
+        render :new
+      end
     end
 
     def update_all
-      shows = Show.all
-      shows.each { |show| show.update_from_tvdb }
+      # TODO: move to a background job
+      Show.find_each do |show|
+        Tvdb::Show.new(show).find_latest_episodes
+      end
+
       flash[:info] = 'All shows were updated'
       redirect_to api_shows_path
     end
 
     # last_updated checks if master show lists are in sync
     def last_updated
-      updated = ShowLog.select(:id, :created_at).last
+      updated = Show.select(:id, :created_at).last
       render json: updated
     end
 
     # Sync recieves a POST from the app of all shows being followed, tvdbid retrieves each show
     def sync
-      results = []
-      params[:shows].each do |k, v|
-        show = Show.find_by_tvdbId(k) # This is innefficient at the moment
-        results << k.to_i unless show.updated_at.to_i == v.to_i
-      end
-      render json: results.to_json
+      shows = params[:shows]
+
+      outdated_ids = Show.where(tvdbId: shows.keys).map do |show|
+        show.tvdbId if show.outdated_data?(shows[show.tvdbId.to_s])
+      end.compact
+
+      # TODO: this really ought to just post back the necessary data to avoid a bunch of calls...
+      render json: outdated_ids.to_json
     end
 
     def tvdbid
-      show = Show.find_by_tvdbId(params[:id])
-      respond_to do |format|
-        format.json { render json: show, root: false }
+      # Rails.cache.delete("tvdbid/#{tvdbid_param}")
+      show = Rails.cache.fetch("tvdbid/#{tvdbid_param}") do
+        Show.find_by_tvdbId(tvdbid_param)
       end
+
+      json = cache ['v1', show] do
+        render_to_string json: show, root: false
+      end
+
+      render json: json
+    end
+
+    def search
+      redirect_to "http://thetvdb.com/api/GetSeries.php?seriesname=#{search_query}"
     end
 
     private
 
-    def post_params
-      params.require(:show).permit(:name, :tvdbId)
-    end
+      def post_params
+        params.require(:show).permit(:name, :tvdbId)
+      end
+
+      def tvdbid_param
+        params.require(:id)
+      end
+
+      def search_query
+        params.require(:q)
+      end
+
   end
 end

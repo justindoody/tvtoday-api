@@ -1,17 +1,10 @@
 .wrap
   .api_container
-    %h3= link_to 'TV Today API', api_shows_path
+    = render 'header', title: 'Show List'
 
-    .session= link_to "sign #{@user[:state]}", eval("log#{@user[:state]}_path"), method: "#{@user[:method]}"
-    - flash.each do |message_type, message|
-      %div{ class: "alert alert-#{message_type}" }
-        = message
-
-    %h1 Show List
-    - if @user[:state] == 'out'
-      = link_to 'Add a Show', new_api_show_path
-      ,
-      = link_to 'Update All Shows', api_update_all_shows_path
+    = link_to 'Add a Show', new_api_show_path
+    %br
+    = link_to 'Update All Shows', api_update_all_shows_path
 
     %strong.count Show Count: #{@shows.count}
 

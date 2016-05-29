@@ -1,0 +1,153 @@
+$font: "Helvetica Neue", "Open Sans", "Arial"
+$light-gray: #828D93
+
+body
+  background: radial-gradient(70% 100%, #312f31, black)
+  color: white
+  margin-top: 20px
+  font-family: $font
+  margin-left: auto
+  margin-right: auto
+
+#landing_page
+  height: 100%
+  margin-left: auto
+  margin-right: auto
+  width: 1110px
+
+#column_one
+  float: left
+  width: 300px
+  text-align: center
+  margin-top: 70px
+  margin-right: 70px
+
+#column_two
+  float: left
+  width: 740px
+
+h1
+  font-size: 35pt
+  font-weight: 500
+  letter-spacing: 5px
+  text-shadow: 1px 1px black
+  color: $light-gray
+  margin-top: 20px
+
+h2
+  font-size: 18pt
+  font-weight: 100
+  letter-spacing: 6px
+  color: #606060
+  margin-top: 10px
+  margin-bottom: 170px
+
+.tag
+  font-size: 25pt
+  font-weight: 400
+
+#app_store_button
+  float: left
+  border-radius: 20px
+  background:  linear-gradient(#22b4e1, #0c80a9)
+  height: 44px
+  width: 240px
+  color: white
+  line-height: 44px
+  font-weight: 100
+  letter-spacing: 1px
+  text-shadow: 1px 1px #065f7d
+  margin-left: 30px
+  margin-top: 30px
+
+#app_store_button:hover
+  background:  linear-gradient(#55c5e8, #0c80a9)
+
+#footer
+  float: left
+  text-align: center
+  font-weight: 100
+  color: $light-gray
+  margin-top: 30px
+  margin-bottom: 20px
+  width: 100%
+
+a
+  color: #179AC5
+  text-decoration: none
+
+a:hover
+  color: #67c8e5
+  text-decoration: none
+
+
+// Slideshow styling
+.banner
+  position: relative
+  max-width: 740px
+  overflow: auto
+  text-align: center
+.banner ul
+  list-style: none
+  padding-left: 0px
+
+.banner ul li
+  display: block
+  float: left
+  width: 33%
+  min-height: 800px
+
+  -o-background-size: 100% 100%
+  -ms-background-size: 100% 100%
+  -moz-background-size: 100% 100%
+  -webkit-background-size: 100% 100%
+  background-size: 100% 100%
+
+.banner .dots
+  position: absolute
+  left: 0
+  right: 0
+  bottom: 0
+
+ol
+  padding-left: 0px
+
+.banner .dots li.active
+  background: #fff
+  opacity: 1
+
+.banner .dots li
+  display: inline-block
+  width: 10px
+  height: 10px
+  margin: 0 4px
+  text-indent: -999em
+  border: 2px solid #fff
+  border-radius: 6px
+  cursor: pointer
+  opacity: .4
+  -webkit-transition: background .5s, opacity .5s
+  -moz-transition: background .5s, opacity .5s
+  transition: background .5s, opacity .5s
+
+@media only screen and (max-width: 1110px)
+  #landing_page
+    width: 740px
+
+  #column_one
+    margin-top: 30px
+    width: 740px
+
+  #logo_container, #install_container
+    float: left
+    width: 50%
+
+  #install_container
+    margin-top: 40px
+
+  h2
+    margin-bottom: 30px
+
+  #app_store_button
+    margin-left: 65px
+

@@ -3,47 +3,38 @@ ruby '2.3.0'
 
 gem 'dotenv-rails'
 gem 'rails', '~> 4.2.0'
-gem 'sass-rails', '~> 4.0.3'
-# Use Uglifier as compressor for JavaScript assets
+gem 'pg'
+gem 'sass-rails'
 gem 'uglifier', '>= 1.3.0'
-# Use CoffeeScript for .js.coffee assets and views
-gem 'coffee-rails', '~> 4.0.0'
-# See https://github.com/sstephenson/execjs#readme for more supported runtimes
-# gem 'therubyracer',  platforms: :ruby
-
-# Use jquery as the JavaScript library
+gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails'
-# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.0'
-# bundle exec rake doc:rails generates the API under doc/api.
-gem 'sdoc', '~> 0.4.0',          group: :doc
-
-# Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-gem 'spring',        group: :development
-
-# Use ActiveModel has_secure_password
-gem 'bcrypt', '~> 3.1.7'
-
 gem 'haml'
+gem 'sprockets', '~> 3.0'
 
-# Parses the tvdb xml files
-gem 'nokogiri'
+gem 'lockup'
+gem 'redis-rails'
+gem 'nokogiri' # Parses the tvdb xml files
+gem 'active_model_serializers'
 
-gem "active_model_serializers", "~> 0.8.0"
+gem 'rollbar'
+
+gem 'spring', group: :development
 
 group :development, :test do
-  # Use sqlite3 as the database for Active Record
-  gem 'sqlite3'
-  gem 'hirb'
+  gem 'rspec-rails', '~> 3.4'
+  gem 'ffaker', '~> 2.0'
+  gem 'factory_girl_rails', '~> 4.5'
+  gem 'capybara'
+  gem 'spring-commands-rspec'
   gem 'guard'
-  gem 'guard-minitest'
-  gem 'minitest-reporters'
-  gem 'rails_best_practices'
+  gem 'guard-rspec', require: false
+  gem 'selenium-webdriver', '~> 2.53.0'
+  gem 'database_cleaner'
+  gem 'webmock'
+  gem 'hirb'
 end
 
 group :production do
-  gem 'mysql2'
   gem 'newrelic_rpm'
 end
