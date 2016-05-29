@@ -7,6 +7,11 @@
 
     %a{ href: 'http://thetvdb.com/api/GetSeries.php?seriesname=' }
       thetvdb series search
+    = form_tag(api_search_path, method: :post) do
+      = label_tag(:q, "Search for:")
+      = text_field_tag(:q)
+      %br
+      = submit_tag("Search")
     %br
     %br
     = form_for @show, url: { action: 'create' }, html: { method: 'post' } do |f|

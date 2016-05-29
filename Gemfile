@@ -20,11 +20,18 @@ gem "active_model_serializers", "~> 0.9.0"
 gem 'spring', group: :development
 
 group :development, :test do
-  # Use sqlite3 as the database for Active Record
-  gem 'hirb'
+  gem 'rspec-rails', '~> 3.4'
+  gem 'ffaker', '~> 2.0'
+  gem 'factory_girl_rails', '~> 4.5'
+  gem 'capybara'
+  gem 'spring-commands-rspec'
   gem 'guard'
-  gem 'guard-minitest'
-  gem 'minitest-reporters'
+  gem 'guard-rspec', require: false
+  gem 'selenium-webdriver', '~> 2.53.0'
+  gem 'database_cleaner'
+  gem 'webmock'
+
+  gem 'hirb'
   gem 'rails_best_practices', '1.15.6'
 end
 

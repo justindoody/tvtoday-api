@@ -3,12 +3,8 @@ namespace :api do
 
   task update_shows: :environment do
     Rails.logger.info 'UPDATING THE API'
-    # Sorts shows so the shows most likely to have changing data are executed first.
-    # next_date_sorted = Show.
-    # unknown_next_date = Show.
-    # shows = next_date_sorted + unknown_next_date
 
-    Show.find_each do |show|
+    Show.by_nearest_next_episode_date.find_each do |show|
       puts "Updating: #{show.name}"
       begin
         Tvdb::Show.new(show).find_latest_episodes
@@ -18,7 +14,7 @@ namespace :api do
       end
     end
 
-    Rails.logger.info "Successfully Checked #{shows.count} Shows"
+    Rails.logger.info "Successfully Checked #{Show.count} Shows"
   end
 end
 

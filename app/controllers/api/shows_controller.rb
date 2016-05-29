@@ -8,12 +8,18 @@ module Api
         format.html do
           @shows = Show.all.order(:name)
         end
+
         format.json do
           shows = Rails.cache.fetch('all_shows') do
-            Show.select('name, tvdbId').to_json(only: [ :name, :tvdbId ])
+            Show.pluck(:name, :tvdbId).map do |show|
+              {
+                name: show.first,
+                tvdbId: show.last
+              }
+            end
           end
 
-          render json: shows
+          render json: shows.to_json(only: [ :name, :tvdbId ])
         end
       end
     end
@@ -26,8 +32,8 @@ module Api
       @show = Show.new(post_params)
 
       if @show.save
-        # Tvdb::Show.new(@show).find_latest_episodes
-        ShowLog.create(log: "Added Show: #{@show.name}")
+        Tvdb::Show.new(@show).find_latest_episodes
+
         flash[:info] = "Added #{@show.name} to the tracker."
         redirect_to api_shows_path
       else
@@ -37,7 +43,10 @@ module Api
     end
 
     def update_all
-      Show.find_each(&:update_from_tvdb)
+      # TODO: move to a background job
+      Show.find_each do |show|
+        Tvdb::Show.new(show).find_latest_episodes
+      end
 
       flash[:info] = 'All shows were updated'
       redirect_to api_shows_path
@@ -45,7 +54,7 @@ module Api
 
     # last_updated checks if master show lists are in sync
     def last_updated
-      updated = ShowLog.select(:id, :created_at).last
+      updated = Show.select(:id, :created_at).last
       render json: updated
     end
 
@@ -57,14 +66,13 @@ module Api
         show.tvdbId if show.outdated_data?(shows[show.tvdbId.to_s])
       end.compact
 
-      # this really ought to just post back the necessary data to avoid a bunch of calls...
+      # TODO: this really ought to just post back the necessary data to avoid a bunch of calls...
       render json: outdated_ids.to_json
     end
 
     def tvdbid
-      tvdbid = params[:id]
-      show = Rails.cache.fetch("tvdbid/#{tvdbid}") do
-        Show.find_by_tvdbId(tvdbid)
+      show = Rails.cache.fetch("tvdbid/#{tvdbid_param}") do
+        Show.find_by_tvdbId(tvdbid_param)
       end
 
       json = cache ['v1', show] do
@@ -74,10 +82,23 @@ module Api
       render json: json
     end
 
+    def search
+      redirect_to "http://thetvdb.com/api/GetSeries.php?seriesname=#{search_query}"
+    end
+
     private
 
-    def post_params
-      params.require(:show).permit(:name, :tvdbId)
-    end
+      def post_params
+        params.require(:show).permit(:name, :tvdbId)
+      end
+
+      def tvdbid_param
+        params.require(:id)
+      end
+
+      def search_query
+        params.require(:q)
+      end
+
   end
 end

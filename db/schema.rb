@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160104021249) do
+ActiveRecord::Schema.define(version: 20160528233815) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,17 +26,9 @@ ActiveRecord::Schema.define(version: 20160104021249) do
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
     t.integer  "show_id"
-    t.string   "kind"
   end
 
-  add_index "episodes", ["kind"], name: "index_episodes_on_kind", using: :btree
   add_index "episodes", ["show_id"], name: "index_episodes_on_show_id", using: :btree
-
-  create_table "show_logs", force: :cascade do |t|
-    t.string   "log"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "shows", force: :cascade do |t|
     t.string   "name"
@@ -44,6 +36,8 @@ ActiveRecord::Schema.define(version: 20160104021249) do
     t.boolean  "canceled"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "previous_episode_id"
+    t.integer  "next_episode_id"
   end
 
   add_index "shows", ["tvdbId"], name: "index_shows_on_tvdbId", unique: true, using: :btree

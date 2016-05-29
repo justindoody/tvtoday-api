@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
     resources :shows, only: [:index, :new, :create]
     post 'sync', to: 'shows#sync'
+    post 'search', to: 'shows#search'
     get 'tvdbid/:id', to: 'shows#tvdbid', as: :tvdbid
     get 'shows_updated', to: 'shows#last_updated', as: :last_updated
     get 'update_all', to: 'shows#update_all', as: :update_all_shows

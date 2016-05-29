@@ -1,9 +1,9 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  username: justindoody
-  password: justin33!
-  database: tv-today
+  username: <%= ENV["DB_USERNAME"] %>
+  password: <%= ENV["DB_PASSWORD"] %>
+  database: <%= ENV["DB_NAME"] %>
   host: localhost
 
 development:
@@ -13,8 +13,4 @@ test:
   <<: *default
 
 production:
-  adapter: mysql2
-  database: <%= ENV["DB_NAME"] %>
-  username: <%= ENV["DB_USERNAME"] %>
-  password: <%= ENV["DB_PASSWORD"] %>
-  host: localhost
+  <<: *default
