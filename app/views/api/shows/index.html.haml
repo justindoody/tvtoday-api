@@ -1,20 +1,10 @@
 .wrap
   .api_container
-    %h3= link_to 'TV Today API', api_shows_path
+    = render 'header', title: 'Show List'
 
-    .session
-      - if logged_in?
-        = link_to "sign out", logout_path, method: 'delete'
-      - else
-        = link_to "sign in", login_path
-
-    = render 'flash'
-
-    %h1 Show List
-    - if logged_in?
-      = link_to 'Add a Show', new_api_show_path
-      ,
-      = link_to 'Update All Shows', api_update_all_shows_path
+    = link_to 'Add a Show', new_api_show_path
+    %br
+    = link_to 'Update All Shows', api_update_all_shows_path
 
     %strong.count Show Count: #{@shows.count}
 

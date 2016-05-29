@@ -1,0 +1,9 @@
+%h3= link_to 'TV Today API', api_shows_path
+
+- if logged_in?
+  .session
+    = link_to "sign out", logout_path, method: 'delete'
+
+= render 'flash'
+
+%h1= title

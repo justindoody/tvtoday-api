@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160528233815) do
+ActiveRecord::Schema.define(version: 20160529190256) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,12 +40,8 @@ ActiveRecord::Schema.define(version: 20160528233815) do
     t.integer  "next_episode_id"
   end
 
+  add_index "shows", ["next_episode_id"], name: "index_shows_on_next_episode_id", using: :btree
+  add_index "shows", ["previous_episode_id"], name: "index_shows_on_previous_episode_id", using: :btree
   add_index "shows", ["tvdbId"], name: "index_shows_on_tvdbId", unique: true, using: :btree
-
-  create_table "users", force: :cascade do |t|
-    t.string   "password_digest"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
 end

@@ -12,9 +12,8 @@ Rails.application.routes.draw do
     get 'update_all', to: 'shows#update_all', as: :update_all_shows
   end
 
-  # Solo admin user, new and destroy refers to a session
-  get    'login',    to: 'user#new'
-  delete 'logout',   to: 'user#destroy'
-  resources :user, only: [:new, :create, :destroy]
+  delete 'logout', to: 'session#destroy'
+
+  mount Lockup::Engine, at: '/lockup'
 
 end

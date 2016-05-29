@@ -10,13 +10,12 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails'
 gem 'turbolinks'
 gem 'haml'
-# gem 'jbuilder', '~> 2.0'
 gem 'sprockets', '~> 3.0'
 
-gem 'bcrypt', '~> 3.1.7'
+gem 'lockup'
 gem 'redis-rails'
 gem 'nokogiri' # Parses the tvdb xml files
-gem "active_model_serializers", "~> 0.9.0"
+gem 'active_model_serializers'
 
 gem 'spring', group: :development
 
@@ -32,7 +31,6 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'webmock'
   gem 'hirb'
-  gem 'rails_best_practices'
 end
 
 group :production do

@@ -1,7 +1,7 @@
 module Api
   class ShowsController < ApplicationController
     skip_before_action :verify_authenticity_token, only: :sync
-    before_action :logged_in_user, only: [:new, :create, :update_all]
+    before_action :check_for_lockup, only: [:new, :create, :update_all]
 
     def index
       respond_to do |format|
@@ -38,7 +38,7 @@ module Api
         redirect_to api_shows_path
       else
         flash[:warning] = @show.errors.full_messages
-        render action: :new
+        render :new
       end
     end
 
@@ -71,6 +71,7 @@ module Api
     end
 
     def tvdbid
+      # Rails.cache.delete("tvdbid/#{tvdbid_param}")
       show = Rails.cache.fetch("tvdbid/#{tvdbid_param}") do
         Show.find_by_tvdbId(tvdbid_param)
       end

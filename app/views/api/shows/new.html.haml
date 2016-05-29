@@ -1,19 +1,17 @@
 .wrap
   .api_container
-    %h3= link_to 'TV Today API', api_shows_path
-    %h1 Add A New Show
-
-    = render 'flash'
+    = render 'header', title: 'Add A New Show'
 
     %a{ href: 'http://thetvdb.com/api/GetSeries.php?seriesname=' }
       thetvdb series search
     = form_tag(api_search_path, method: :post) do
-      = label_tag(:q, "Search for:")
+      = label_tag(:q, "Search tvdb:")
       = text_field_tag(:q)
-      %br
       = submit_tag("Search")
+
     %br
     %br
+
     = form_for @show, url: { action: 'create' }, html: { method: 'post' } do |f|
       = f.label 'Name: '
       %br
