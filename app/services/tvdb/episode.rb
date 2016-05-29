@@ -25,7 +25,7 @@ module Tvdb
     private
 
       def air_date_passed?
-        Date.strptime(air_date) <= Date.today
+        Date.strptime(air_date) < Date.today
       end
 
       def air_date
