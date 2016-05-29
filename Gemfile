@@ -17,6 +17,8 @@ gem 'redis-rails'
 gem 'nokogiri' # Parses the tvdb xml files
 gem 'active_model_serializers'
 
+gem 'rollbar'
+
 gem 'spring', group: :development
 
 group :development, :test do
