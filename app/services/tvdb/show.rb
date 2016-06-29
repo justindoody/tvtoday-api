@@ -8,6 +8,8 @@ module Tvdb
     # Fetches and parses show and episode data from thetvdb.com
     # Saves data only for previous and next episode
     def find_latest_episodes
+      @show.next_episode = nil
+
       episode_data.reverse_each do |episode_data|
         episode = Tvdb::Episode.new(data: episode_data, air_time: air_time, show: @show)
 
