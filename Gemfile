@@ -1,23 +1,23 @@
 source 'https://rubygems.org'
-ruby '2.3.0'
+ruby '2.3.7'
 
-gem 'dotenv-rails'
+gem 'dotenv-rails', '~> 2.1'
 gem 'rails', '~> 4.2.0'
-gem 'pg'
-gem 'sass-rails'
-gem 'uglifier', '>= 1.3.0'
-gem 'coffee-rails', '~> 4.1.0'
-gem 'jquery-rails'
-gem 'turbolinks'
-gem 'haml'
+gem 'pg', '~> 0.18.4'
+gem 'sass-rails', '~> 5.0'
+gem 'uglifier', '~> 1.3'
+gem 'coffee-rails', '~> 4.1'
+gem 'jquery-rails' #, '~> 4.1'
+gem 'turbolinks', '~> 2.5'
+gem 'haml', '~> 4.0'
 gem 'sprockets', '~> 3.0'
 
-gem 'lockup'
-gem 'redis-rails'
-gem 'nokogiri' # Parses the tvdb xml files
-gem 'active_model_serializers'
+gem 'lockup', '~> 1.3'
+gem 'redis-rails', '~> 4.0'
+gem 'nokogiri', '~> 1.8' # Parses the tvdb xml files
+gem 'active_model_serializers', '~> 0.10'
 
-gem 'rollbar'
+gem 'rollbar', '~> 2.11'
 
 gem 'spring', group: :development
 
@@ -36,5 +36,5 @@ group :development, :test do
 end
 
 group :production do
-  gem 'newrelic_rpm'
+  gem 'newrelic_rpm', '~> 3.9'
 end

@@ -2,9 +2,8 @@ require 'dotenv'
 require 'dotenv/tasks'
 Dotenv.load '.env.deploy'
 
-require 'mina/bundler'
-require 'mina/rails'
 require 'mina/git'
+require 'mina/rails'
 require 'mina/rvm'
 
 set :user, ENV['REMOTE_USER']
@@ -15,23 +14,24 @@ set :deploy_to, ENV['DEPLOY_TO']
 set :repository, ENV['REPO']
 set :branch, 'master'
 
-set :shared_paths, ['log', '.env.production']
+set :shared_dirs, fetch(:shared_dirs, []).push('log')
+set :shared_files, fetch(:shared_files, []).push('.env.production')
 set :rvm_path, ENV['RVM_PATH']
 
-task :environment do
-  invoke :'rvm:use[default]'
+task :remote_environment do
+  invoke :'rvm:use', '2.3.7@default'
 end
 
-task setup: :environment do
-  queue! %[mkdir -p "#{deploy_to}/#{shared_path}/log"]
-  queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/log"]
+# task :setup do
+#   command! %[mkdir -p "#{shared_path}/log"]
+#   command! %[chmod g+rx,u+rwx "#{shared_path}/log"]
 
-  queue! "touch \"#{deploy_to}/shared/.env.production\""
-  queue  "echo \"-----> Be sure to edit 'shared/.env.production'.\""
-end
+#   command! "touch \"#{shared_path}/.env.production\""
+#   comment "Be sure to edit 'shared/.env.production'."
+# end
 
 desc "Deploys the current version to the server."
-task deploy: :environment do
+task :deploy do
   deploy do
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
@@ -39,10 +39,12 @@ task deploy: :environment do
     invoke :'rails:db_migrate'
     invoke :'rails:assets_precompile'
     invoke :'deploy:cleanup'
-    to(:launch) { invoke :restart }
+    invoke :'bundle:clean'
+    on(:launch) { invoke :restart }
   end
 end
 
 task :restart do
-  queue "passenger-config restart-app #{deploy_to}"
+  comment 'Restart application'
+  command "passenger-config restart-app #{fetch(:deploy_to)}"
 end
