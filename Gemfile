@@ -13,7 +13,7 @@ gem 'haml', '~> 4.0'
 gem 'sprockets', '~> 3.0'
 
 gem 'lockup', '~> 1.3'
-gem 'redis-rails', '~> 4.0'
+gem 'redis-rails', '~> 5.0'
 gem 'nokogiri', '~> 1.8' # Parses the tvdb xml files
 gem 'active_model_serializers', '~> 0.10'
 
