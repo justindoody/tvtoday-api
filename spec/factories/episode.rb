@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :episode do
     name { FFaker::Skill.tech_skill }
     season 1

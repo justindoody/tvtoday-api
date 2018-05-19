@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :show do
     name 'Archer'
     canceled false

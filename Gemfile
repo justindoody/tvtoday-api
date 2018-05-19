@@ -25,7 +25,7 @@ gem 'spring', group: :development
 group :development, :test do
   gem 'rspec-rails', '~> 3.4'
   gem 'ffaker', '~> 2.0'
-  gem 'factory_girl_rails', '~> 4.5'
+  gem 'factory_bot_rails', '~> 4.8'
   gem 'capybara'
   gem 'spring-commands-rspec'
   gem 'guard'
