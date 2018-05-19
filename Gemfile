@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.3.7'
+ruby '~> 2.5.1'
 
 gem 'dotenv-rails', '~> 2.1'
 gem 'rails', '~> 4.2.0'
@@ -19,6 +19,7 @@ gem 'active_model_serializers', '~> 0.10'
 
 gem 'rollbar', '~> 2.11'
 
+gem 'bootsnap', require: false
 gem 'spring', group: :development
 
 group :development, :test do

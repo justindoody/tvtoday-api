@@ -14,8 +14,13 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
-/
 
+# Ignore environment variables
 .env
 .env.*
+
+# Ignore vendored gems.
 /vendor/ruby
+
+# Ignore precompiled assets.
+/public/assets/**/*
