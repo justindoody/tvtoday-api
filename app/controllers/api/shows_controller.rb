@@ -60,6 +60,7 @@ module Api
 
     # Sync recieves a POST from the app of all shows being followed, tvdbid retrieves each show
     def sync
+      params = params.permit!.to_h
       shows = params[:shows]
 
       outdated_ids = Show.where(tvdbId: shows.keys).map do |show|

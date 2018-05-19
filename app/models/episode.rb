@@ -1,4 +1,4 @@
-class Episode < ActiveRecord::Base
+class Episode < ApplicationRecord
   belongs_to :show, touch: true
 
   def number_metadata

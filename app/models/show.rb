@@ -1,4 +1,4 @@
-class Show < ActiveRecord::Base
+class Show < ApplicationRecord
   has_many :episodes, dependent: :destroy
   belongs_to :previous_episode, class_name: 'Episode', dependent: :destroy
   belongs_to :next_episode, class_name: 'Episode', dependent: :destroy
