@@ -1,14 +1,77 @@
-web:
-  build: .
-  command: bundle exec rails s -p 3000 -b '0.0.0.0'
-  ports:
-    - "3000:3000"
-  links:
-    - db
-    - redis
+version: "3.4"
+services:
+  web:
+    image: 20dots/tvtoday-api
+    ports:
+      - "3000:80"
+    networks:
+      - webnet
+    secrets:
+      - tvtoday_tvdb_api_key
+      - tvtoday_database_url
+      - tvtoday_secret_key_base
+      - tvtoday_lockup_codeword
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 256M
+      restart_policy:
+        condition: on-failure
+    links:
+      - postgres
+      - redis
 
-db:
-  image: postgres
+  postgres:
+    image: postgres:10.4-alpine
+    networks:
+      - webnet
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD_FILE: /run/secrets/tvtoday_postgres_password
+      POSTGRES_DB: app
+    volumes:
+      - "~/docker_vol_data/tvtoday/postgres:/var/lib/postgresql/data"
+    secrets:
+      - tvtoday_postgres_password
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 256M
+      restart_policy:
+        condition: on-failure
 
-redis:
-  image: redis
+  redis:
+    image: redis
+    volumes:
+      - "~/docker_vol_data/tvtoday/redis:/data"
+    command: redis-server --appendonly yes
+    networks:
+      - webnet
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 256M
+      restart_policy:
+        condition: on-failure
+
+networks:
+  webnet:
+
+secrets:
+  tvtoday_postgres_password:
+    external: true
+  tvtoday_tvdb_api_key:
+    external: true
+  tvtoday_database_url:
+    external: true
+  tvtoday_secret_key_base:
+    external: true
+  tvtoday_lockup_codeword:
+    external: true

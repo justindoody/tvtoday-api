@@ -1,10 +1,11 @@
 default: &default
   adapter: postgresql
   encoding: unicode
+  host: localhost
+  port: 5432
   username: <%= ENV["DB_USERNAME"] %>
   password: <%= ENV["DB_PASSWORD"] %>
   database: <%= ENV["DB_NAME"] %>
-  host: localhost
 
 development:
   <<: *default
@@ -15,3 +16,4 @@ test:
 
 production:
   <<: *default
+  url: <%= Heron.TVTODAY_DATABASE_URL %>

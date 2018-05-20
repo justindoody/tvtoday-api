@@ -3,7 +3,6 @@
 #
 Show.delete_all
 Episode.delete_all
-ActiveRecord::Base.connection.execute("TRUNCATE users")
 
 show = Show.create(
   name: 'Homeland',
@@ -30,5 +29,3 @@ show.next_episode = Episode.create(
 )
 
 show.save!
-
-User.create(password: 'password')

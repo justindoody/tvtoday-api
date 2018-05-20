@@ -21,6 +21,7 @@ gem 'rollbar', '~> 2.11'
 
 gem 'bootsnap', require: false
 gem 'spring', group: :development
+gem 'tzinfo-data'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.4'

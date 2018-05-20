@@ -1,5 +1,6 @@
 tmp
 .env
+.env.*
 config/deploy.rb
 vendor/ruby
 log/*.log

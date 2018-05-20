@@ -3,7 +3,7 @@ module Tvdb
     require 'open-uri'
 
     def initialize
-      @api_key = ENV['TVDB_API_KEY']
+      @api_key = Heron.TVTODAY_TVDB_API_KEY
     end
 
     def get_for_id(series_id)
