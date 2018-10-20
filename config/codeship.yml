@@ -1,0 +1,14 @@
+default: &default
+  adapter: postgresql
+  host: localhost
+  encoding: unicode
+  pool: 10
+  username: <%= ENV['PGUSER'] %>
+  template: template1
+  password: <%= ENV['PGPASSWORD'] %>
+  port: 5432
+  sslmode: disable
+
+test:
+  database: test
+  <<: *default
