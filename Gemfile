@@ -26,13 +26,13 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.4'
   gem 'ffaker', '~> 2.0'
   gem 'factory_girl_rails', '~> 4.5'
-  gem 'capybara'
+  gem 'capybara', '~> 3.9'
   gem 'spring-commands-rspec'
   gem 'guard'
   gem 'guard-rspec', require: false
-  gem 'selenium-webdriver', '~> 2.53.0'
+  gem 'selenium-webdriver', '~> 3.14'
   gem 'database_cleaner'
-  gem 'webmock'
+  gem 'webmock', '~> 3.4'
   gem 'hirb'
 end
 
