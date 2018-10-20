@@ -36,6 +36,8 @@ group :development, :test do
   gem 'hirb'
 end
 
+gem 'simplecov', require: false, group: :test
+
 group :production do
   gem 'newrelic_rpm', '~> 3.9'
 end
