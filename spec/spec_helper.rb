@@ -1,6 +1,8 @@
+require 'factory_bot'
+
 RSpec.configure do |config|
   config.backtrace_exclusion_patterns = [/.rvm/, /vendor/]
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
 
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
