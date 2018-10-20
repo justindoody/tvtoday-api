@@ -1,6 +1,6 @@
 # TV Today README
 
-[ ![Codeship Status for justindoody/tvtoday-api](https://app.codeship.com/projects/60e68090-b6c7-0136-d988-5e0d730c4eac/status?branch=master)](https://app.codeship.com/projects/311652)
+[ ![Codeship Status for justindoody/tvtoday-api](https://app.codeship.com/projects/60e68090-b6c7-0136-d988-5e0d730c4eac/status?branch=master)](https://app.codeship.com/projects/311652) [![codecov](https://codecov.io/gh/justindoody/tvtoday-api/branch/master/graph/badge.svg)](https://codecov.io/gh/justindoody/tvtoday-api)
 
 A simple, fast app and extension for tracking tv shows.
 
