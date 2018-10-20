@@ -37,6 +37,7 @@ group :development, :test do
 end
 
 gem 'simplecov', require: false, group: :test
+gem 'codecov', require: false, group: :test
 
 group :production do
   gem 'newrelic_rpm', '~> 3.9'

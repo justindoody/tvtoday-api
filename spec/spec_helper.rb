@@ -8,6 +8,11 @@ SimpleCov.start 'rails' do
   add_group 'Serializers', 'app/serializers'
 end
 
+if ENV['CI'] == 'true'
+  require 'codecov'
+  SimpleCov.formatter = SimpleCov::Formatter::Codecov
+end
+
 require 'factory_bot'
 
 RSpec.configure do |config|

@@ -57,6 +57,10 @@ GEM
       activesupport
     childprocess (0.9.0)
       ffi (~> 1.0, >= 1.0.11)
+    codecov (0.1.13)
+      json
+      simplecov
+      url
     coderay (1.1.2)
     coffee-rails (4.2.2)
       coffee-script (>= 2.2.0)
@@ -258,6 +262,7 @@ GEM
       thread_safe (~> 0.1)
     uglifier (4.1.10)
       execjs (>= 0.3.0, < 3)
+    url (0.3.2)
     webmock (3.4.2)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
@@ -272,6 +277,7 @@ DEPENDENCIES
   active_model_serializers (~> 0.10)
   bootsnap
   capybara (~> 3.9)
+  codecov
   coffee-rails (~> 4.1)
   database_cleaner
   dotenv-rails (~> 2.1)
