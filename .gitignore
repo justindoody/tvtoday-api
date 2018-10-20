@@ -24,3 +24,5 @@
 
 # Ignore precompiled assets.
 /public/assets/**/*
+
+/coverage

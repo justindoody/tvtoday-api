@@ -1,3 +1,13 @@
+require 'simplecov'
+SimpleCov.start 'rails' do
+  add_filter 'vendor'
+  add_filter 'spec'
+  add_group 'Models', 'app/models'
+  add_group 'Controllers', 'app/controllers'
+  add_group 'Services', 'app/services'
+  add_group 'Serializers', 'app/serializers'
+end
+
 require 'factory_bot'
 
 RSpec.configure do |config|
