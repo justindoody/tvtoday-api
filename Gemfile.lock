@@ -260,7 +260,7 @@ GEM
       coffee-rails
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
-    uglifier (4.1.10)
+    uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
     url (0.3.2)
     webmock (3.4.2)
