@@ -9,7 +9,7 @@ gem 'uglifier', '~> 4.1'
 gem 'coffee-rails', '~> 4.1'
 gem 'jquery-rails' #, '~> 4.1'
 gem 'turbolinks', '~> 2.5'
-gem 'haml', '~> 4.0'
+gem 'haml', '~> 5.1'
 gem 'sprockets', '~> 3.0'
 
 gem 'lockup', '~> 1.3'
