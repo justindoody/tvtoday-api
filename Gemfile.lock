@@ -135,7 +135,6 @@ GEM
     mini_portile2 (2.3.0)
     minitest (5.11.3)
     msgpack (1.2.4)
-    multi_json (1.13.1)
     nenv (0.3.0)
     newrelic_rpm (3.18.1.330)
     nokogiri (1.8.5)
@@ -196,8 +195,7 @@ GEM
       redis-store (~> 1.1.0)
     redis-store (1.1.7)
       redis (>= 2.2)
-    rollbar (2.16.0)
-      multi_json
+    rollbar (2.23.2)
     rspec (3.7.0)
       rspec-core (~> 3.7.0)
       rspec-expectations (~> 3.7.0)
